@@ -1,0 +1,90 @@
+let prefix = [
+  'gitlab',
+  'vmware',
+  'docker',
+  'kubernetes',
+  'etcd'
+]
+
+let suffix = [
+  'server',
+  'prod',
+  'node1',
+  'node2',
+  'node3'
+]
+
+let vmTiers = [
+  { storage: 1, memory: 25 },
+  { storage: 2, memory: 50 },
+  { storage: 4, memory: 80 },
+  { storage: 8, memory: 160 }
+]
+
+let operatingSystems = [
+  'Ubuntu 14.04',
+  'Ubuntu 16.04',
+  'Ubuntu 17.10',
+  'Debian 7',
+  'Debian 8',
+  'Debian 9'
+]
+
+function fakeIPAddress () {
+  var s = ''
+  for (var i = 0; i < 4; i++) {
+    s += Math.floor(Math.random() * 255 + 1) + '.'
+  }
+  return s.substring(0, s.length - 1)
+}
+
+function randomMachine () {
+  let name = prefix[Math.floor(Math.random() * prefix.length)] + '-' + suffix[Math.floor(Math.random() * prefix.length)]
+  let tier = Math.floor(Math.random() * vmTiers.length)
+  let system = operatingSystems[Math.floor(Math.random() * operatingSystems.length)]
+  let ip = fakeIPAddress()
+  let tags = []
+  return newMachine(name, tier, ip, system, tags, Math.floor(Math.random() * 100))
+}
+
+function newMachine (name, tier, ip, system, tags, progress) {
+  var createdAt = null
+  if (progress > 50) {
+    createdAt = new Date()
+  }
+  return {
+    name: name,
+    memory: vmTiers[tier].memory,
+    storage: vmTiers[tier].storage,
+    system: system,
+    systemName: system.replace(/ .*/, '').toLowerCase(),
+    tags: tags,
+    ipAddress: ip,
+    createdAt: createdAt,
+    creationProgress: progress
+  }
+}
+
+var fakeMachines = null
+
+export default {
+  fetchMachines (callback) {
+    console.log('updating vms')
+    try {
+      if (!fakeMachines) {
+        fakeMachines = Array.apply(null, { length: 10 }).map(Function.call, randomMachine)
+      } else {
+        fakeMachines.forEach(element => {
+          if (element.creationProgress < 100) {
+            element.creationProgress = Math.min(element.creationProgress + 20, 100)
+          } else {
+            element.createdAt = new Date()
+          }
+        })
+      }
+      callback(null, fakeMachines)
+    } catch (err) {
+      callback(err, null)
+    }
+  }
+}

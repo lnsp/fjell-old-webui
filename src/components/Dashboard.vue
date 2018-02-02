@@ -1,0 +1,166 @@
+<template>
+  <div>
+    <h1>{{ msg }}</h1>
+    <div class="loading" v-if="loading">
+      Loading ...
+    </div>
+    <div v-if="error" class="error">
+      {{ error }}
+    </div>
+    <table v-if="machines" class="table">
+      <thead>
+        <tr>
+          <td>Name</td>
+          <td>IP Address</td>
+          <td>Created</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="vm in machines" :key="vm.ipAddress">
+          <td class="align-middle machine-info" v-on:click="$router.push({ name: 'MachineDetails', params: { vmName: vm.name }})">
+            <div class="row d-flex align-items-center">
+            <div class="col-2">
+              <img :src="require('../assets/distros/' + vm.systemName + '.svg')" class="distro-logo">
+            </div>
+            <div class="col">
+              <div class="row">
+                <strong class="machine-name">{{ vm.name }}</strong>
+              </div>
+              <div class="row">
+                <span class="text-muted">
+                  <small>{{ vm.memory }} GB RAM / {{ vm.storage }} GB Disk / {{ vm.system }}</small>
+                </span>
+              </div>
+            </div>
+            </div>
+          </td>
+          <template v-if="vm.createdAt">
+            <td class="align-middle" v-on:click="copyIPAddress(vm)">
+              <span>{{ vm.ipAddress }}</span>
+              <transition name="copy-ip">
+                <span class="copy-ip small" v-if="vm.showIPCopy">     Copied!</span>
+              </transition>
+            </td>
+            <td class="align-middle">
+              {{ vm.createdAt | moment("from", true) }} ago
+            </td>
+            <td class="align-middle">
+              <div class="btn-group">
+                <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  More
+                </button>
+                <div class="dropdown-menu">
+                  <router-link :to="{ name: 'AddDomain', params: { ipAddress: vm.ipAddress }}" class="dropdown-item">Add a domain</router-link>
+                  <router-link :to="{ name: 'AccessConsole', params: { vmName: vm.name }}" class="dropdown-item">Access console</router-link>
+                  <div class="dropdown-divider"></div>
+                  <router-link :to="{ name: 'DestroyMachine', params: { vmName: vm.name }}" class="dropdown-item text-danger">Destroy</router-link>
+                </div>
+              </div>
+            </td>
+          </template>
+          <template v-else>
+            <td class="align-middle" colspan="2">
+              <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                :aria-valuenow="vm.creationProgress" aria-valuemin="0" aria-valuemax="100" :style="'width: ' + vm.creationProgress + '%'"></div>
+              </div>
+            </td>
+            <td></td>
+          </template>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import API from '@/API'
+export default {
+  name: 'Dashboard',
+  data () {
+    return {
+      msg: 'Dashboard',
+      loading: false,
+      refreshTimer: null,
+      machines: null,
+      error: null
+    }
+  },
+  created () {
+    this.fetchData()
+    this.refreshTimer = setInterval(this.fetchData, 1000)
+  },
+  beforeDestroy () {
+    this.cancelRefreshTimer()
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+  methods: {
+    cancelRefreshTimer () {
+      clearInterval(this.refreshTimer)
+    },
+    fetchData () {
+      this.error = this.post = null
+      this.loading = true
+      API.fetchMachines((err, machines) => {
+        this.loading = false
+        if (err) {
+          this.error = err.toString()
+        } else {
+          this.machines = machines
+        }
+      })
+    },
+    copyIPAddress (vm) {
+      vm.showIPCopy = true
+      setTimeout(() => {
+        vm.showIPCopy = false
+      }, 250)
+    }
+  }
+}
+</script>
+
+<style>
+.distro-logo {
+  width: 2.5em;
+}
+.machine-info {
+  cursor: pointer;
+}
+.machine-name {
+  color: #007bff;
+}
+
+.copy-ip-enter {
+  opacity: 0;
+  transform: translateY(20px) translateX(1em);
+}
+.copy-ip-enter-active {
+  transition: .5s;
+  transition-property: opacity transform;
+}
+.copy-ip-enter-to {
+  transform: translateY(0px) translateX(1em);
+  margin-left: 1em;
+}
+.copy-ip-leave {
+  transform: translateY(0px) translateX(1em);
+  margin-left: 1em;
+}
+.copy-ip-leave-active {
+  transition: .5s;
+  transition-property: opacity transform;
+}
+.copy-ip-leave-to {
+  opacity: 0;
+  transform: translateY(-20px) translateX(1em);
+}
+.copy-ip {
+  position: absolute;
+  color: #007bff;
+  margin-left: 1em;
+}
+</style>
