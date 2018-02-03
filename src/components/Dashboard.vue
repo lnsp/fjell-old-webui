@@ -18,6 +18,7 @@
         </div>
       </div>
       <div class="dashboard-body">
+        <transition-group name="progress-action">
         <div class="dashboard-row row align-items-center justify-content-between" v-for="vm in machines" :key="vm.ipAddress">
           <div class="dashboard-cell col-12 col-md-5">
             <div class="dashboard-machine-info row align-items-center" @click="$router.push({ name: 'MachineDetails', params: { vmName: vm.name }})">
@@ -79,6 +80,7 @@
             </div>
           </transition>
         </div>
+        </transition-group>
       </div>
     </div>
   </div>

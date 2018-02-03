@@ -3,13 +3,13 @@
     <nav class="navbar navbar-expand navbar-dark bg-primary mb-4">
       <div class="container">
         <div class="row w-100 m-0 align-items-center justify-content-between">
-          <div class="col-auto ml-md-3 ml-0 order-1">
+          <div class="col-auto ml-md-3 pl-0 order-1">
             <router-link :to="{ name: 'Dashboard' }" class="navbar-brand main-nav-brand">
               <!--<img :src="require('./assets/logo.svg')" style="width: 2em">!-->
               <strong>Paddle</strong>
             </router-link>
           </div>
-          <div class="col-sm-12 col-md-auto order-md-2 order-3">
+          <div class="col-sm-12 col-md-auto pl-0 order-md-2 order-3">
             <ul class="navbar-nav mr-auto main-nav-pills">
               <li class="nav-item">
                 <router-link :to="{ name: 'Dashboard' }" class="nav-link pl-0 pl-md-1">Dashboard</router-link>
