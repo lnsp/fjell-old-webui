@@ -21,11 +21,11 @@
           <td class="align-middle machine-info" v-on:click="$router.push({ name: 'MachineDetails', params: { vmName: vm.name }})">
             <div class="row d-flex align-items-center">
             <div class="col-2">
-              <img :src="require('../assets/distros/' + vm.systemName + '.svg')" class="distro-logo">
+              <img :src="require('../assets/distros/' + vm.systemName + (vm.offline ? '_offline' : '') + '.svg')" class="distro-logo">
             </div>
             <div class="col">
               <div class="row">
-                <strong class="machine-name">{{ vm.name }}</strong>
+                <strong :class="{ 'text-primary': !vm.offline, 'text-muted': vm.offline }">{{ vm.name }}</strong>
               </div>
               <div class="row">
                 <span class="text-muted">

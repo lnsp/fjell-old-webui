@@ -57,7 +57,8 @@ function newMachine (name, tier, ip, system, tags, progress) {
     tags: tags,
     ipAddress: ip,
     createdAt: new Date(),
-    deployProgress: progress
+    deployProgress: progress,
+    offline: true
   }
 }
 
@@ -73,6 +74,7 @@ export default {
           if (element.deployProgress < 100) {
             element.deployProgress = Math.min(element.deployProgress + 20, 100)
           }
+          element.offline = element.deployProgress < 100
         })
       }
       callback(null, fakeMachines)
