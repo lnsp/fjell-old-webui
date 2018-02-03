@@ -19,7 +19,23 @@
         </li>
       </ul>
       <div class="my-2 my-lg-0">
-        <router-link :to="{ name: 'AddMachine' }" class="btn btn-primary align-items-center d-flex"><octicon name="plus" /><strong><span class="ml-3">Create</span></strong></router-link>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle d-flex align-items-center" type="button" id="addDropdownToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <octicon name="plus"></octicon>
+            <strong>
+              <span class="ml-2">Add</span>
+            </strong>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="addDropdownToggle">
+            <router-link class="dropdown-item" :to="{ name: 'AddMachine' }">Virtual Machine</router-link>
+            <router-link class="dropdown-item" :to="{ name: 'Storage' }">Block Storage</router-link>
+            <router-link class="dropdown-item" :to="{ name: 'Storage' }">Bucket Storage</router-link>
+            <div class="dropdown-divider"></div>
+            <router-link class="dropdown-item" :to="{ name: 'AddFloatingIP' }">Floating IP</router-link>
+            <router-link class="dropdown-item" :to="{ name: 'AddFirewall' }">Firewall</router-link>
+            <router-link class="dropdown-item" :to="{ name: 'AddLoadBalancer' }">Load Balancer</router-link>
+          </div>
+        </div>
       </div>
       </div>
     </nav>

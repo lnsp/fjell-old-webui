@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Dashboard from '@/components/Dashboard'
 import Settings from '@/components/Settings'
 import MachineDetails from '@/components/machines/MachineDetails'
-import Storage from '@/components/storage/Storage'
+import StorageDashboard from '@/components/storage/Dashboard'
 import Networking from '@/components/networking/Networking'
 import AddDomain from '@/components/networking/AddDomain'
 import AccessConsole from '@/components/machines/AccessConsole'
@@ -24,34 +24,64 @@ export default new Router({
       component: Settings
     },
     {
-      path: '/machines/:vmName',
+      path: '/machine/new',
+      name: 'AddMachine',
+      component: MachineDetails
+    },
+    {
+      path: '/machine/:vmName',
       name: 'MachineDetails',
       component: MachineDetails
     },
     {
-      path: '/machines/:vmName/console',
+      path: '/machine/:vmName/console',
       name: 'AccessConsole',
       component: AccessConsole
     },
     {
-      path: '/machines/:vmName/destroy',
+      path: '/machine/:vmName/destroy',
       name: 'DestroyMachine',
       component: DestroyMachine
     },
     {
       path: '/storage',
       name: 'Storage',
-      component: Storage
+      component: StorageDashboard
     },
     {
-      path: '/networking',
+      path: '/storage/block/new',
+      Name: 'AddStorageBlock',
+      component: StorageDashboard
+    },
+    {
+      path: '/storage/bucket/new',
+      Name: 'AddStorageBucket',
+      component: StorageDashboard
+    },
+    {
+      path: '/network',
       name: 'Networking',
       component: Networking
     },
     {
-      path: '/networking/domains/new/:ipAddress',
+      path: '/network/domain/new/:ipAddress',
       name: 'AddDomain',
       component: AddDomain
+    },
+    {
+      path: '/network/floating-ip/new',
+      name: 'AddFloatingIP',
+      component: Networking
+    },
+    {
+      path: '/network/firewall/new',
+      name: 'AddFirewall',
+      component: Networking
+    },
+    {
+      path: '/network/load-balancer/new',
+      name: 'AddLoadBalancer',
+      component: Networking
     }
   ],
   linkExactActiveClass: 'active'
