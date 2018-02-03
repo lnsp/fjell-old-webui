@@ -44,10 +44,10 @@ function randomMachine () {
   let system = operatingSystems[Math.floor(Math.random() * operatingSystems.length)]
   let ip = fakeIPAddress()
   let tags = []
-  return newMachine(name, tier, ip, system, tags, Math.floor(Math.random() * 100))
+  return newMachine(name, tier, ip, system, tags)
 }
 
-function newMachine (name, tier, ip, system, tags, progress) {
+function newMachine (name, tier, ip, system, tags) {
   return {
     name: name,
     memory: vmTiers[tier].memory,
@@ -57,29 +57,28 @@ function newMachine (name, tier, ip, system, tags, progress) {
     tags: tags,
     ipAddress: ip,
     createdAt: new Date(),
-    deployProgress: progress,
+    deployProgress: 0,
     offline: true
   }
 }
 
-var fakeMachines = null
+var fakeMachines = []
+
+var fakeTimer = null
 
 export default {
   fetchMachines (callback) {
-    try {
-      if (!fakeMachines) {
-        fakeMachines = Array.apply(null, { length: 10 }).map(Function.call, randomMachine)
-      } else {
-        fakeMachines.forEach(element => {
-          if (element.deployProgress < 100) {
-            element.deployProgress = Math.min(element.deployProgress + 20, 100)
-          }
-          element.offline = element.deployProgress < 100
-        })
+    fakeMachines.forEach(element => {
+      if (element.deployProgress < 100) {
+        element.deployProgress = Math.min(element.deployProgress + 20, 100)
       }
-      callback(null, fakeMachines)
-    } catch (err) {
-      callback(err, null)
+      element.offline = element.deployProgress < 100
+    })
+    callback(null, fakeMachines)
+    if (fakeTimer === null) {
+      fakeTimer = setInterval(() => {
+        fakeMachines.push(randomMachine())
+      }, 60000)
     }
   }
 }
