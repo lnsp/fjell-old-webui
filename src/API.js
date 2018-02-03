@@ -15,10 +15,10 @@ let suffix = [
 ]
 
 let vmTiers = [
-  { storage: 1, memory: 25 },
-  { storage: 2, memory: 50 },
-  { storage: 4, memory: 80 },
-  { storage: 8, memory: 160 }
+  { memory: 1, storage: 25 },
+  { memory: 2, storage: 50 },
+  { memory: 4, storage: 80 },
+  { memory: 8, storage: 160 }
 ]
 
 let operatingSystems = [

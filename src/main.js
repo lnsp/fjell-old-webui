@@ -2,13 +2,16 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import 'bootstrap'
 import Vue from 'vue'
+import VueClipboard from 'vue-clipboard2'
+import VueMoment from 'vue-moment'
 import App from './App'
 import router from './router'
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-Vue.use(require('vue-moment'))
+Vue.use(VueMoment)
+Vue.use(VueClipboard)
 new Vue({
   el: '#app',
   router,

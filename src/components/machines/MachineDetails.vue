@@ -1,6 +1,6 @@
 <template>
-  <div class="hello">
-    <h1>Machine <span class="text-muted">{{ $route.params.vmName }}</span></h1>
+  <div>
+    <h3>Machine <span class="machine-name">{{ $route.params.vmName }}</span></h3>
   </div>
 </template>
 
@@ -14,3 +14,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.machine-name {
+  color: #007bff;
+}
+</style>

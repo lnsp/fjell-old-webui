@@ -36,11 +36,13 @@
             </div>
           </td>
           <template v-if="vm.createdAt">
-            <td class="align-middle" v-on:click="copyIPAddress(vm)">
-              <span>{{ vm.ipAddress }}</span>
-              <transition name="copy-ip">
-                <span class="copy-ip small" v-if="vm.showIPCopy">     Copied!</span>
-              </transition>
+            <td class="align-middle">
+              <div class="copy-action-container">
+                <span class="copy-action-ip" v-clipboard:copy="vm.ipAddress" v-on:click="toggleCopyIP(vm)">{{ vm.ipAddress }}</span>
+                <transition name="copy-action">
+                  <span class="copy-action-label" v-if="vm.showCopyState">Copied!</span>
+                </transition>
+              </div>
             </td>
             <td class="align-middle">
               {{ vm.createdAt | moment("from", true) }} ago
@@ -76,6 +78,8 @@
 
 <script>
 import API from '@/API'
+let copyActionInterval = 1000
+
 export default {
   name: 'Dashboard',
   data () {
@@ -113,11 +117,13 @@ export default {
         }
       })
     },
-    copyIPAddress (vm) {
-      vm.showIPCopy = true
+    toggleCopyIP (vm) {
+      console.log('Show "Copied" for', vm.ipAddress)
+      vm.showCopyState = true
       setTimeout(() => {
-        vm.showIPCopy = false
-      }, 250)
+        console.log('Hide "Copied" for ', vm.ipAddress)
+        vm.showCopyState = false
+      }, copyActionInterval)
     }
   }
 }
@@ -134,33 +140,38 @@ export default {
   color: #007bff;
 }
 
-.copy-ip-enter {
+.copy-action-enter {
   opacity: 0;
-  transform: translateY(20px) translateX(1em);
+  transform: translateY(20px);
 }
-.copy-ip-enter-active {
-  transition: .5s;
-  transition-property: opacity transform;
+.copy-action-enter-active {
+  transition: opacity .25s ease-in-out, transform .25s ease-in-out;
 }
-.copy-ip-enter-to {
-  transform: translateY(0px) translateX(1em);
-  margin-left: 1em;
+.copy-action-enter-to {
+  transform: translateY(0px);
+  opacity: 1;
 }
-.copy-ip-leave {
-  transform: translateY(0px) translateX(1em);
-  margin-left: 1em;
+.copy-action-leave {
+  transform: translateY(0px);
+  opacity: 1;
 }
-.copy-ip-leave-active {
-  transition: .5s;
-  transition-property: opacity transform;
+.copy-action-leave-active {
+  transition: opacity .25s ease-in-out, transform .25s ease-in-out;
 }
-.copy-ip-leave-to {
+.copy-action-leave-to {
   opacity: 0;
-  transform: translateY(-20px) translateX(1em);
+  transform: translateY(-20px);
 }
-.copy-ip {
+.copy-action-label {
   position: absolute;
+  right: 1em;
   color: #007bff;
-  margin-left: 1em;
+  font-size: 0.8em;
+}
+.copy-action-container {
+  position: relative;
+}
+.copy-action-ip {
+  cursor: pointer;
 }
 </style>

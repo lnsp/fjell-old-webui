@@ -33,7 +33,7 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Lato', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -42,4 +42,5 @@ export default {
 
 <style lang="sass">
   @import '../node_modules/bootstrap/scss/bootstrap.scss';
+  @import url('https://fonts.googleapis.com/css?family=Lato');
 </style>

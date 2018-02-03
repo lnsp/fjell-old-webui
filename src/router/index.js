@@ -29,6 +29,16 @@ export default new Router({
       component: MachineDetails
     },
     {
+      path: '/machines/:vmName/console',
+      name: 'AccessConsole',
+      component: AccessConsole
+    },
+    {
+      path: '/machines/:vmName/destroy',
+      name: 'DestroyMachine',
+      component: DestroyMachine
+    },
+    {
       path: '/storage',
       name: 'Storage',
       component: Storage
@@ -42,16 +52,6 @@ export default new Router({
       path: '/networking/domains/new/:ipAddress',
       name: 'AddDomain',
       component: AddDomain
-    },
-    {
-      path: '/machines/:vmName/console',
-      name: 'AccessConsole',
-      component: AccessConsole
-    },
-    {
-      path: '/machines/:vmName/destroy',
-      name: 'DestroyMachine',
-      component: DestroyMachine
     }
   ],
   linkExactActiveClass: 'active'
