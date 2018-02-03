@@ -1,6 +1,6 @@
 # ![logo](https://user-images.githubusercontent.com/3391295/35761975-a6310e0c-088f-11e8-82f9-30d48803552e.png) Paddle
 
-> Open platform for virtualized machine, network and storage management.
+> Open platform for virtualized computing, storage management and networking.
 
 ## Build Setup
 
