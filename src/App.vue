@@ -1,27 +1,31 @@
 <template>
-  <div id="app" class="container mt-3">
-    <header class="align-items-center header pt-3">
-      <nav>
-        <ul class="nav nav-pills float-right">
-          <li class="nav-item">
-            <router-link :to="{ name: 'Dashboard' }" class="nav-link">Dashboard</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'Storage' }" class="nav-link">Storage</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'Networking' }" class="nav-link">Networking</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'Settings' }" class="nav-link">Settings</router-link>
-          </li>
-        </ul>
-      </nav>
-      <h3 class="text-muted">
-        Paddle
-      </h3>
-    </header>
-    <router-view/>
+  <div id="app">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+      <div class="container">
+
+      <router-link :to="{ name: 'Dashboard' }" class="navbar-brand">
+        <!--<img :src="require('./assets/logo.svg')" style="width: 2em">!-->
+        <strong>Paddle</strong>
+      </router-link>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <router-link :to="{ name: 'Dashboard' }" class="nav-link">Dashboard</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'Storage' }" class="nav-link">Storage</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'Networking' }" class="nav-link">Networking</router-link>
+        </li>
+      </ul>
+      <div class="my-2 my-lg-0">
+        <router-link :to="{ name: 'AddMachine' }" class="btn btn-primary align-items-center d-flex"><octicon name="plus" /><strong><span class="ml-3">Create</span></strong></router-link>
+      </div>
+      </div>
+    </nav>
+    <div class="container">
+      <router-view/>
+    </div>
   </div>
 </template>
 

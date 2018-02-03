@@ -48,10 +48,6 @@ function randomMachine () {
 }
 
 function newMachine (name, tier, ip, system, tags, progress) {
-  var createdAt = null
-  if (progress > 50) {
-    createdAt = new Date()
-  }
   return {
     name: name,
     memory: vmTiers[tier].memory,
@@ -60,8 +56,8 @@ function newMachine (name, tier, ip, system, tags, progress) {
     systemName: system.replace(/ .*/, '').toLowerCase(),
     tags: tags,
     ipAddress: ip,
-    createdAt: createdAt,
-    creationProgress: progress
+    createdAt: new Date(),
+    deployProgress: progress
   }
 }
 
@@ -69,16 +65,13 @@ var fakeMachines = null
 
 export default {
   fetchMachines (callback) {
-    console.log('updating vms')
     try {
       if (!fakeMachines) {
         fakeMachines = Array.apply(null, { length: 10 }).map(Function.call, randomMachine)
       } else {
         fakeMachines.forEach(element => {
-          if (element.creationProgress < 100) {
-            element.creationProgress = Math.min(element.creationProgress + 20, 100)
-          } else {
-            element.createdAt = new Date()
+          if (element.deployProgress < 100) {
+            element.deployProgress = Math.min(element.deployProgress + 20, 100)
           }
         })
       }

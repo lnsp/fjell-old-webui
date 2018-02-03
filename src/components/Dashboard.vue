@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ msg }}</h1>
+    <h3>Dashboard</h3>
     <div class="loading" v-if="loading">
       Loading ...
     </div>
@@ -35,7 +35,7 @@
             </div>
             </div>
           </td>
-          <template v-if="vm.createdAt">
+          <template v-if="vm.deployProgress === 100">
             <td class="align-middle">
               <div class="copy-action-container">
                 <span class="copy-action-ip" v-clipboard:copy="vm.ipAddress" v-on:click="toggleCopyIP(vm)">{{ vm.ipAddress }}</span>
@@ -65,7 +65,7 @@
             <td class="align-middle" colspan="2">
               <div class="progress">
                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                :aria-valuenow="vm.creationProgress" aria-valuemin="0" aria-valuemax="100" :style="'width: ' + vm.creationProgress + '%'"></div>
+                :aria-valuenow="vm.deployProgress" aria-valuemin="0" aria-valuemax="100" :style="'width: ' + vm.deployProgress + '%'"></div>
               </div>
             </td>
             <td></td>
