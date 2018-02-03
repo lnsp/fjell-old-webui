@@ -19,7 +19,7 @@
         </li>
       </ul>
       <div class="my-2 my-lg-0">
-        <div class="dropdown">
+        <div class="dropdown add-service-dropdown">
           <button class="btn btn-primary dropdown-toggle d-flex align-items-center" type="button" id="addDropdownToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <octicon name="plus"></octicon>
             <strong>
@@ -27,13 +27,31 @@
             </strong>
           </button>
           <div class="dropdown-menu" aria-labelledby="addDropdownToggle">
-            <router-link class="dropdown-item" :to="{ name: 'AddMachine' }">Virtual Machine</router-link>
-            <router-link class="dropdown-item" :to="{ name: 'Storage' }">Block Storage</router-link>
-            <router-link class="dropdown-item" :to="{ name: 'Storage' }">Bucket Storage</router-link>
+            <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'AddMachine' }">
+              Virtual Machine
+              <div class="small text-muted">Create virtual servers</div>
+            </router-link>
+            <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'Storage' }">
+              Block Storage
+              <div class="small text-muted">Add storage to machines</div>
+            </router-link>
+            <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'Storage' }">
+              Bucket Storage
+              <div class="small text-muted">Store and server static assets</div>
+            </router-link>
             <div class="dropdown-divider"></div>
-            <router-link class="dropdown-item" :to="{ name: 'AddFloatingIP' }">Floating IP</router-link>
-            <router-link class="dropdown-item" :to="{ name: 'AddFirewall' }">Firewall</router-link>
-            <router-link class="dropdown-item" :to="{ name: 'AddLoadBalancer' }">Load Balancer</router-link>
+            <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'AddFloatingIP' }">
+              Floating IP
+              <div class="small text-muted">Reserve IP addresses for servers</div>
+            </router-link>
+            <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'AddFirewall' }">
+              Firewall
+              <div class="small text-muted">Increase server security</div>
+            </router-link>
+            <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'AddLoadBalancer' }">
+              Load Balancer
+              <div class="small text-muted">Distribute traffic to servers</div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -57,6 +75,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+.add-service-dropdown .dropdown-item:hover {
+  background-color: #dfefff;
 }
 </style>
 
