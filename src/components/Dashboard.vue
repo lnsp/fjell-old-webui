@@ -8,26 +8,26 @@
       {{ error }}
     </div>
 
-    <div v-if="machines" class="dashboard-table">
-      <div class="dashboard-header row">
-        <div class="dashboard-cell col-5">Name</div>
+    <div v-if="machines" class="dashboard-table mb-3">
+      <div class="dashboard-header row d-none d-md-flex">
+        <div class="dashboard-cell col-3 col-sm-5">Name</div>
         <div class="dashboard-cell col-7 row">
           <div class="col-4">IP Address</div>
-          <div class="col-4">Created</div>
+          <div class="col-4 text-right">Created</div>
           <div class="col"></div>
         </div>
       </div>
       <div class="dashboard-body">
-        <div class="dashboard-row row align-items-center" v-for="vm in machines" :key="vm.ipAddress">
-          <div class="dashboard-cell col-5">
+        <div class="dashboard-row row align-items-center justify-content-between" v-for="vm in machines" :key="vm.ipAddress">
+          <div class="dashboard-cell col-12 col-md-5">
             <div class="dashboard-machine-info row align-items-center" @click="$router.push({ name: 'MachineDetails', params: { vmName: vm.name }})">
-              <div class="col-2">
+              <div class="col-auto">
                 <transition name="deploy-action" mode="out-in">
                   <img key="logo-offline" v-if="vm.offline" :src="require('../assets/distros/' + vm.systemName + '_offline.svg')" class="dashboard-distro-logo">
                   <img key="logo-online" v-else :src="require('../assets/distros/' + vm.systemName + '.svg')" class="dashboard-distro-logo">
                 </transition>
               </div>
-              <div class="col">
+              <div class="col-auto">
                 <div class="row">
                   <strong :class="{ 'text-primary': !vm.offline, 'text-muted': vm.offline }">{{ vm.name }}</strong>
                 </div>
@@ -41,21 +41,23 @@
           </div>
           <!-- find a better solution for animating transition !-->
           <transition name="progress-action" mode="out-in">
-            <div key="ready" class="dashboard-cell col-7 row" v-if="vm.deployProgress === 100">
-              <div class="col-4">
+            <div key="ready" class="dashboard-cell dashboard-info-cell d-none d-sm-flex col-12 col-md-7 row" v-if="vm.deployProgress === 100">
+              <div class="d-none d-sm-flex offset-1 offset-md-0 col-sm-auto col-md-4">
                 <div class="copy-action-container">
+                  <span class="text-muted d-inline d-md-none">IP </span>
                 <span class="copy-action-ip" v-clipboard:copy="vm.ipAddress" v-on:click="toggleCopyIP(vm)">{{ vm.ipAddress }}</span>
                   <transition name="copy-action">
                     <span class="copy-action-label" v-if="vm.showCopyState">Copied!</span>
                   </transition>
                 </div>
               </div>
-              <div class="col-4">
+              <div class="d-none d-sm-inline col text-right col-md-4">
+                <span class="text-muted d-inline d-md-none">Created </span>
                 <span>
                 {{ vm.createdAt | moment("from", true) }} ago
                 </span>
               </div>
-              <div class="col">
+              <div class="col-md-4 d-none d-md-flex">
                 <div class="btn-group">
                   <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More
@@ -69,7 +71,7 @@
                 </div>
               </div>
             </div>
-            <div v-else key="in-progress" class="dashboard-cell col-7">
+            <div v-else key="in-progress" class="dashboard-cell col-12 col-md-7 p-md-4">
               <div class="progress">
                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
                 :aria-valuenow="vm.deployProgress" aria-valuemin="0" aria-valuemax="100" :style="'width: ' + vm.deployProgress + '%'"></div>
@@ -136,6 +138,9 @@ export default {
 </script>
 
 <style>
+.dashboard-header {
+  border-top: 1px solid #dee2e6;
+}
 .dashboard-cell, .dashboard-header, .dashboard-row {
   margin: 0;
 }
@@ -143,7 +148,7 @@ export default {
   border-top: 1px solid #dee2e6;
 }
 .dashboard-cell {
-  padding: 0.75rem;
+  padding: 0.5rem;
   align-items: center;
   position: relative;
 }

@@ -70,7 +70,7 @@ export default {
   fetchMachines (callback) {
     fakeMachines.forEach(element => {
       if (element.deployProgress < 100) {
-        element.deployProgress = Math.min(element.deployProgress + 20, 100)
+        element.deployProgress = Math.min(element.deployProgress + 5, 100)
       }
       element.offline = element.deployProgress < 100
     })
@@ -78,7 +78,7 @@ export default {
     if (fakeTimer === null) {
       fakeTimer = setInterval(() => {
         fakeMachines.push(randomMachine())
-      }, 60000)
+      }, 10000)
     }
   }
 }
