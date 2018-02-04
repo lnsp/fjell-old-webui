@@ -15,6 +15,10 @@ Vue.config.productionTip = false
 Vue.use(VueMoment)
 Vue.use(VueClipboard)
 Vue.component('octicon', Octicon)
+Vue.component('site-header', {
+  props: ['title'],
+  template: '<h2 style="font-weight: 300; margin-top: 2rem; margin-bottom: 0.5rem">{{ title }}</h2>'
+})
 new Vue({
   el: '#app',
   router,

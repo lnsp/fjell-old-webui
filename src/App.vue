@@ -86,15 +86,9 @@ export default {
 .add-service-dropdown .dropdown-item:hover {
   background-color: #dfefff;
 }
-.profile-image {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 1rem;
-  background-color: #fff;
-}
 </style>
 
 <style lang="sass">
   @import '../node_modules/bootstrap/scss/bootstrap.scss';
-  @import url('https://fonts.googleapis.com/css?family=Lato');
+  @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 </style>

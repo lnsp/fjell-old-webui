@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Dashboard from '@/components/Dashboard'
 import Settings from '@/components/Settings'
 import MachineDetails from '@/components/machines/MachineDetails'
+import AddMachine from '@/components/machines/AddMachine'
 import StorageDashboard from '@/components/storage/Dashboard'
 import Networking from '@/components/networking/Networking'
 import AddDomain from '@/components/networking/AddDomain'
@@ -26,7 +27,7 @@ export default new Router({
     {
       path: '/machine/new',
       name: 'AddMachine',
-      component: MachineDetails
+      component: AddMachine
     },
     {
       path: '/machine/:vmName',

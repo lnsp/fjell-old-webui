@@ -82,7 +82,7 @@ export default {
     if (fakeTimer === null) {
       fakeTimer = setInterval(() => {
         fakeMachines.push(randomMachine())
-      }, 10000)
+      }, 100000)
     }
   }
 }

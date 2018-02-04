@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Dashboard</h3>
+    <site-header title="Dashboard" />
     <div class="loading" v-if="loading">
       Loading ...
     </div>
