@@ -22,12 +22,16 @@ let vmTiers = [
 ]
 
 let operatingSystems = [
-  'Ubuntu 14.04',
-  'Ubuntu 16.04',
-  'Ubuntu 17.10',
-  'Debian 7',
-  'Debian 8',
-  'Debian 9'
+  { system: 'Ubuntu 14.04', name: 'ubuntu' },
+  { system: 'Ubuntu 16.04', name: 'ubuntu' },
+  { system: 'Ubuntu 17.10', name: 'ubuntu' },
+  { system: 'Debian 7', name: 'debian' },
+  { system: 'Debian 8', name: 'debian' },
+  { system: 'Debian 9', name: 'debian' },
+  { system: 'Arch Linux', name: 'archlinux' },
+  { system: 'FreeBSD 10.3', name: 'freebsd' },
+  { system: 'FreeBSD 10.4', name: 'freebsd' },
+  { system: 'FreeBSD 11.1', name: 'freebsd' }
 ]
 
 function fakeIPAddress () {
@@ -47,13 +51,13 @@ function randomMachine () {
   return newMachine(name, tier, ip, system, tags)
 }
 
-function newMachine (name, tier, ip, system, tags) {
+function newMachine (name, tier, ip, os, tags) {
   return {
     name: name,
     memory: vmTiers[tier].memory,
     storage: vmTiers[tier].storage,
-    system: system,
-    systemName: system.replace(/ .*/, '').toLowerCase(),
+    system: os.system,
+    systemName: os.name,
     tags: tags,
     ipAddress: ip,
     createdAt: new Date(),
