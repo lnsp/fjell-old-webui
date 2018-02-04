@@ -14,24 +14,45 @@ let suffix = [
   'node3'
 ]
 
-let vmTiers = [
-  { memory: 1, storage: 25 },
-  { memory: 2, storage: 50 },
-  { memory: 4, storage: 80 },
-  { memory: 8, storage: 160 }
+let machineTiers = [
+  { cpus: 1, memory: 1, storage: 25 },
+  { cpus: 1, memory: 2, storage: 50 },
+  { cpus: 2, memory: 4, storage: 80 },
+  { cpus: 4, memory: 8, storage: 160 },
+  { cpus: 6, memory: 16, storage: 320 },
+  { cpus: 8, memory: 32, storage: 640 },
+  { cpus: 12, memory: 48, storage: 960 },
+  { cpus: 16, memory: 64, storage: 1280 },
+  { cpus: 20, memory: 96, storage: 1920 },
+  { cpus: 24, memory: 128, storage: 2560 },
+  { cpus: 32, memory: 92, storage: 3840 }
 ]
 
-let operatingSystems = [
-  { system: 'Ubuntu 14.04', name: 'ubuntu' },
-  { system: 'Ubuntu 16.04', name: 'ubuntu' },
-  { system: 'Ubuntu 17.10', name: 'ubuntu' },
-  { system: 'Debian 7', name: 'debian' },
-  { system: 'Debian 8', name: 'debian' },
-  { system: 'Debian 9', name: 'debian' },
-  { system: 'Arch Linux', name: 'archlinux' },
-  { system: 'FreeBSD 10.3', name: 'freebsd' },
-  { system: 'FreeBSD 10.4', name: 'freebsd' },
-  { system: 'FreeBSD 11.1', name: 'freebsd' }
+let machineSystems = [
+  {
+    name: 'Ubuntu',
+    slug: 'ubuntu',
+    versions: [ '14.04 LTS', '16.04 LTS', '17.10' ],
+    defaultVersion: 1
+  },
+  {
+    name: 'Debian',
+    slug: 'debian',
+    versions: [ 'Stretch', 'Jessie', 'Wheezy' ],
+    defaultVersion: 0
+  },
+  {
+    name: 'Arch Linux',
+    slug: 'archlinux',
+    versions: [ '2018.01.01' ],
+    defaultVersion: 0
+  },
+  {
+    name: 'FreeBSD',
+    slug: 'freebsd',
+    versions: ['10.3', '10.4', '11.1'],
+    defaultVersion: 2
+  }
 ]
 
 function fakeIPAddress () {
@@ -44,25 +65,22 @@ function fakeIPAddress () {
 
 function randomMachine () {
   let name = prefix[Math.floor(Math.random() * prefix.length)] + '-' + suffix[Math.floor(Math.random() * prefix.length)]
-  let tier = Math.floor(Math.random() * vmTiers.length)
-  let system = operatingSystems[Math.floor(Math.random() * operatingSystems.length)]
+  let tier = machineTiers[Math.floor(Math.random() * machineTiers.length)]
+  let system = machineSystems[Math.floor(Math.random() * machineSystems.length)]
+  let systemVersion = system.versions[Math.floor(Math.random() * system.versions.length)]
   let ip = fakeIPAddress()
-  let tags = []
-  return newMachine(name, tier, ip, system, tags)
-}
-
-function newMachine (name, tier, ip, os, tags) {
   return {
     name: name,
-    memory: vmTiers[tier].memory,
-    storage: vmTiers[tier].storage,
-    system: os.system,
-    systemName: os.name,
-    tags: tags,
+    memory: tier.memory,
+    storage: tier.storage,
+    cpus: tier.cpus,
+    systemName: system.name + ' ' + systemVersion,
+    systemSlug: system.slug,
+    tags: [],
     ipAddress: ip,
-    createdAt: new Date(),
     deployProgress: 0,
-    offline: true
+    offline: true,
+    createdAt: new Date()
   }
 }
 
@@ -71,7 +89,13 @@ var fakeMachines = []
 var fakeTimer = null
 
 export default {
-  fetchMachines (callback) {
+  getMachineSizeOptions (callback) {
+    setTimeout(() => callback(null, machineTiers), 1000)
+  },
+  getMachineSystemOptions (callback) {
+    setTimeout(() => callback(null, machineSystems), 1000)
+  },
+  getDeployedMachines (callback) {
     fakeMachines.forEach(element => {
       if (element.deployProgress < 100) {
         element.deployProgress = Math.min(element.deployProgress + 5, 100)
@@ -82,7 +106,7 @@ export default {
     if (fakeTimer === null) {
       fakeTimer = setInterval(() => {
         fakeMachines.push(randomMachine())
-      }, 100000)
+      }, 1000)
     }
   }
 }

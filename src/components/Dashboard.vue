@@ -24,8 +24,8 @@
             <div class="dashboard-machine-info row align-items-center" @click="$router.push({ name: 'MachineDetails', params: { vmName: vm.name }})">
               <div class="col-auto">
                 <transition name="deploy-action" mode="out-in">
-                  <img key="logo-offline" v-if="vm.offline" :src="require('../assets/distros/' + vm.systemName + '_offline.svg')" class="dashboard-distro-logo">
-                  <img key="logo-online" v-else :src="require('../assets/distros/' + vm.systemName + '.svg')" class="dashboard-distro-logo">
+                  <img key="logo-offline" v-if="vm.offline" :src="require('../assets/distros/' + vm.systemSlug + '_offline.svg')" class="dashboard-distro-logo">
+                  <img key="logo-online" v-else :src="require('../assets/distros/' + vm.systemSlug + '.svg')" class="dashboard-distro-logo">
                 </transition>
               </div>
               <div class="col-auto">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="row">
                   <span class="text-muted">
-                    <small>{{ vm.memory }} GB RAM / {{ vm.storage }} GB Disk / {{ vm.system }}</small>
+                    <small>{{ vm.memory }} GB RAM / {{ vm.storage }} GB Disk / {{ vm.systemName }}</small>
                   </span>
                 </div>
               </div>
@@ -116,9 +116,9 @@ export default {
       clearInterval(this.refreshTimer)
     },
     fetchData () {
-      this.error = this.post = null
+      this.error = this.machines = null
       this.loading = true
-      API.fetchMachines((err, machines) => {
+      API.getDeployedMachines((err, machines) => {
         this.loading = false
         if (err) {
           this.error = err.toString()
