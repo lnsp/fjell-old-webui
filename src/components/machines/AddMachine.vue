@@ -38,7 +38,7 @@
           <div v-for="size in sizes" :key="size.memory+''+size.cpus+''+size.storage" class="col-12 p-1 mb-2 col-sm4 col-lg-4 col-xl-3">
             <div class="card selection-card" @click="selectSize(size)" :class="{ 'text-white': size.selected, 'bg-primary': size.selected }">
               <div class="card-body"><strong>{{ size.cpus }}</strong> <small>vCPUs</small>
-              <hr /><strong>{{ size.memory }} GB</strong> <small>RAM</small>
+              <hr /><strong>{{ size.memory }} MB</strong> <small>RAM</small>
               <hr /><strong>{{ size.storage }} GB</strong> <small>HDD</small></div>
             </div>
           </div>
@@ -96,33 +96,22 @@
       <hr />
       <div class="row mb-3">
         <div class="col-sm-4">
-          <h5 class="mb-4">How many?</h5>
-          <div class="input-group input-group-fixed">
-            <div class="input-group-prepend">
-              <button class="btn btn-lg btn-outline-primary" :class="{ 'btn-outline-secondary': hostnames.length <= 1 }" :disabled="hostnames.length <= 1" @click="removeInstance()">
-                −
-              </button>
-            </div>
-            <input type="text" class="form-control text-center" :value="hostnames.length" />
-            <div class="input-group-append">
-              <button class="btn btn-lg btn-outline-primary" @click="addInstance()">
-                +
-              </button>
-            </div>
-          </div>
+          <h5>How many instances?</h5>
+          <count-selector class="input-group-fixed mt-4"
+            :value="instanceCount" @input="value => setInstanceCount(value)" :min="minInstances" :max="maxInstances" />
         </div>
         <div class="col">
-          <h5 class="mb-4">Choose a hostname</h5>
+          <h5>Choose your hostnames whisely!</h5>
           <transition-group name="fade">
-            <div v-for="hostname in hostnames" :key="hostname" class="row">
-              <div class="input-group input-group-fixed mb-3">
-                <input type="text" class="form-control" :value="hostname" />
+            <div v-for="name in instanceNames" :key="name" class="row">
+              <div class="input-group input-group-fixed m-3">
+                <input type="text" class="form-control" :value="name" />
               </div>
             </div>
           </transition-group>
         </div>
       </div>
-      <button class="btn btn-primary btn-lg btn-block" @click="deployMachine()">
+      <button class="btn btn-primary btn-lg btn-block" :disabled="instanceCount < 1" :class="{ 'btn-secondary': instanceCount < 1 }" @click="deployMachine()">
         Create
       </button>
     </div>
@@ -131,94 +120,53 @@
 
 <script>
 import API from '@/API'
+import CountSelector from '@/components/controls/CountSelector'
 export default {
   name: 'AddMachine',
+  components: {
+    'count-selector': CountSelector
+  },
   data () {
     return {
       sizes: null,
       systems: null,
       blocks: null,
       keys: null,
-      hostnames: ['my-virtual-machine']
+      instanceCount: 0,
+      minInstances: 0,
+      maxInstances: 0,
+      instanceNames: [],
+      selectedSize: null,
+      selectedSystem: null
     }
   },
   created () {
-    this.fetchSizeOptions()
-    this.fetchSystemOptions()
-    this.fetchBlockStorage()
-    this.fetchSSHKeys()
+    this.fetchOptions()
   },
   methods: {
-    fetchSSHKeys () {
-      this.keys = null
-      API.getDeployedSSHKeys((err, keys) => {
+    wrapAPICall (api, callback, args) {
+      api.apply(null, [(err, obj) => {
         if (err) {
-          this.error = err
+          console.log('Failed to reach API:', err)
         } else {
-          this.keys = keys.map(key => {
-            return {
-              ID: key.ID,
-              name: key.name,
-              fingerprint: key.fingerprint,
-              selected: false
-            }
-          })
+          callback(obj)
         }
-      })
+      }].concat(args))
     },
-    fetchBlockStorage () {
-      this.blocks = null
-      API.getDeployedBlockStorage((err, blocks) => {
-        if (err) {
-          this.error = err
-        } else {
-          this.blocks = blocks.map(block => {
-            return {
-              ID: block.ID,
-              name: block.name,
-              size: block.size,
-              selected: false
-            }
-          })
-        }
-      })
-    },
-    fetchSizeOptions () {
-      this.sizes = null
-      API.getMachineSizeOptions((err, sizes) => {
-        if (err) {
-          this.error = err
-        } else {
-          this.sizes = sizes.map(size => {
-            return {
-              ID: size.ID,
-              cpus: size.cpus,
-              memory: size.memory,
-              storage: size.storage,
-              selected: false
-            }
-          })
-        }
-      })
-    },
-    fetchSystemOptions () {
-      this.systems = null
-      API.getMachineSystemOptions((err, systems) => {
-        if (err) {
-          this.error = err
-        } else {
-          this.systems = systems.map(sys => {
-            return {
-              ID: sys.ID,
-              name: sys.name,
-              slug: sys.slug,
-              versions: sys.versions,
-              selected: false,
-              selectedVersion: sys.defaultVersion
-            }
-          })
-        }
-      })
+    fetchOptions () {
+      this.wrapAPICall(API.getMachineSystemOptions, systems => {
+        this.systems = systems.map(system => Object.assign({ selected: false, selectedVersion: system.defaultVersion }, system))
+        console.log(systems)
+      }, [])
+      this.wrapAPICall(API.getMachineSizeOptions, sizes => {
+        this.sizes = sizes.map(size => Object.assign({ selected: false }, size))
+      }, [])
+      this.wrapAPICall(API.getDeployedBlockStorage, blocks => {
+        this.blocks = blocks.map(block => Object.assign({ selected: false }, block))
+      }, [])
+      this.wrapAPICall(API.getDeployedSSHKeys, keys => {
+        this.keys = keys.map(key => Object.assign({ selected: false }, key))
+      }, [])
     },
     deployMachine () {
       var system, size
@@ -232,24 +180,16 @@ export default {
       })
       storage = this.blocks.filter(s => s.selected).map(s => s.ID)
       keys = this.keys.filter(k => keys).map(k => k.ID)
-      API.deployMachine(system.ID, system.selectedVersion, size.ID, storage, keys, this.hostnames, (err) => {
+      API.deployMachine(system.ID, system.selectedVersion, size.ID, storage, keys, this.instanceNames, (err) => {
         if (err) {
           console.log('Failed to create VM:', err)
         } else {
-          this.router.push({ name: 'Dashboard' })
+          this.$router.push({ name: 'Dashboard' })
         }
       })
     },
     selectKey (key) {
       key.selected = !key.selected
-    },
-    removeInstance () {
-      if (this.hostnames.length > 1) {
-        this.hostnames.pop()
-      }
-    },
-    addInstance () {
-      this.hostnames.push(this.hostnames[0] + '' + this.hostnames.length)
     },
     selectSystem (sys) {
       this.systems.forEach(os => {
@@ -258,6 +198,9 @@ export default {
         }
       })
       sys.selected = true
+
+      this.selectedSystem = sys
+      this.updateInstanceAllowance()
     },
     selectStorage (block) {
       block.selected = !block.selected
@@ -267,10 +210,33 @@ export default {
         sz.selected = false
       })
       size.selected = true
-      console.log('selected size')
+
+      this.selectedSize = size
+      this.updateInstanceAllowance()
     },
     selectSystemVersion (sys, index) {
       sys.selectedVersion = index
+    },
+    setInstanceCount (count) {
+      this.instanceCount = count
+      this.updateInstanceNames()
+    },
+    slugged (name) {
+      return name.toLowerCase().replace(/[\s-]/g, '')
+    },
+    updateInstanceNames () {
+      this.instanceNames = new Array(this.instanceCount)
+      for (var i = 0; i < this.instanceCount && this.selectedSystem && this.selectedSize; i++) {
+        this.instanceNames[i] = this.selectedSystem.slug + '-' + this.slugged(this.selectedSystem.versions[this.selectedSystem.selectedVersion]) + '-' + this.selectedSize.memory + 'mb-' + i
+      }
+    },
+    updateInstanceAllowance () {
+      this.wrapAPICall(API.getInstanceAllowanceOf, (allowance) => {
+        this.maxInstances = allowance.max
+        this.minInstances = allowance.min
+        this.instanceCount = Math.min(this.maxInstances, Math.max(this.minInstances, this.instanceCount))
+        this.updateInstanceNames()
+      }, [])
     }
   }
 }
@@ -307,6 +273,6 @@ export default {
 }
 
 .input-group-fixed {
-  height: 60px;
+  height: 50px;
 }
 </style>
