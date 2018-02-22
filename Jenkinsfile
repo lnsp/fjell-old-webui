@@ -1,9 +1,16 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:6-alpine'
+    }
+    
+  }
   stages {
     stage('Build') {
+      agent any
       steps {
-        sh 'npm run build'
+        sh '''npm install
+npm run build'''
       }
     }
   }
