@@ -8,7 +8,7 @@
         −
       </button>
     </div>
-    <input type="text" readonly class="form-control text-center" :value="value" />
+    <input type="text" readonly class="form-control text-center count-selector-value" :value="value" />
     <div class="input-group-append">
       <button class="btn btn-lg btn-outline-primary"
         :class="{ 'btn-outline-secondary': !canIncrement() }"
