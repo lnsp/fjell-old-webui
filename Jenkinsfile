@@ -6,11 +6,20 @@ pipeline {
     
   }
   stages {
-    stage('Build') {
+    stage('Install') {
       agent any
       steps {
-        sh '''npm install
-npm run build'''
+        sh 'npm install'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'npm run test'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'npm run build'
       }
     }
   }
