@@ -36,16 +36,17 @@
                     Virtual Machine
                     <div class="small text-muted">Create virtual servers</div>
                   </router-link>
+                  <!--
                   <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'Storage' }">
                     Block Storage
                     <div class="small text-muted">Add storage to machines</div>
                   </router-link>
                   <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'Storage' }">
-                    Bucket Storage
+                    Buckets
                     <div class="small text-muted">Store and server static assets</div>
                   </router-link>
                   <div class="dropdown-divider"></div>
-                  <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'AddFloatingIP' }">
+                  <router-link exact-active-class="" class="dropdown-item" disabled :to="{ name: 'AddFloatingIP' }">
                     Floating IP
                     <div class="small text-muted">Reserve IP addresses for servers</div>
                   </router-link>
@@ -57,6 +58,7 @@
                     Load Balancer
                     <div class="small text-muted">Distribute traffic to servers</div>
                   </router-link>
+                  !-->
                 </div>
               </div>
             </div>
@@ -85,6 +87,15 @@ export default {
 }
 .add-service-dropdown .dropdown-item:hover {
   background-color: #dfefff;
+}
+
+.add-service-dropdown .dropdown-item.disabled {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.add-service-dropdown .dropdown-item.disabled:hover {
+  background-color: #fff;
 }
 </style>
 

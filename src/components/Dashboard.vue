@@ -67,7 +67,7 @@
                     <router-link :to="{ name: 'AddDomain', params: { ipAddress: vm.ipAddress }}" class="dropdown-item">Add a domain</router-link>
                     <router-link :to="{ name: 'AccessConsole', params: { vmName: vm.name }}" class="dropdown-item">Access console</router-link>
                     <div class="dropdown-divider"></div>
-                    <router-link :to="{ name: 'DestroyMachine', params: { vmName: vm.name }}" class="dropdown-item text-danger">Destroy</router-link>
+                    <router-link :to="{ name: 'DestroyMachine', params: { vmName: vm.name }}" class="dropdown-item destroy-dropdown">Destroy</router-link>
                   </div>
                 </div>
               </div>
@@ -205,6 +205,13 @@ export default {
 }
 .deploy-action-enter, .deploy-action-leave-to {
   opacity: 0;
+}
+.destroy-dropdown:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+.destroy-dropdown {
+  color: #dc3545;
 }
 
 .progress-action-enter-active, .progress-action-leave-active {
