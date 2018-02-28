@@ -1,5 +1,7 @@
 <template>
-  <div><h4>Usage graphs</h4></div>
+  <div>
+    <h4>Graphs</h4>
+  </div>
 </template>
 
 <script>
