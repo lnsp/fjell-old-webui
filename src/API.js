@@ -162,6 +162,9 @@ export default {
   getDeployedSSHKeys (callback) {
     setTimeout(() => callback(null, fakeKeys), Math.random() * 750 + 250)
   },
+  getMachineByName (callback, name) {
+    setTimeout(() => callback(null, fakeMachines.filter(m => m.name === name)[0]), Math.random() * 750 + 250)
+  },
   getDeployedMachines (callback) {
     fakeMachines.forEach(element => {
       if (element.deployProgress < 100) {

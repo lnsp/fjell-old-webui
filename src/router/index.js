@@ -2,13 +2,15 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Dashboard from '@/components/Dashboard'
 import Settings from '@/components/Settings'
-import MachineDetails from '@/components/machines/MachineDetails'
 import AddMachine from '@/components/machines/AddMachine'
 import StorageDashboard from '@/components/storage/Dashboard'
 import Networking from '@/components/networking/Networking'
 import AddDomain from '@/components/networking/AddDomain'
-import AccessConsole from '@/components/machines/AccessConsole'
-import DestroyMachine from '@/components/machines/DestroyMachine'
+
+import MachineDetails from '@/components/machines/MachineDetails'
+import UsageGraphs from '@/components/machines/details/UsageGraphs'
+import AccessConsole from '@/components/machines/details/AccessConsole'
+import DestroyMachine from '@/components/machines/details/DestroyMachine'
 
 Vue.use(Router)
 
@@ -32,17 +34,24 @@ export default new Router({
     {
       path: '/machine/:vmName',
       name: 'MachineDetails',
-      component: MachineDetails
-    },
-    {
-      path: '/machine/:vmName/console',
-      name: 'AccessConsole',
-      component: AccessConsole
-    },
-    {
-      path: '/machine/:vmName/destroy',
-      name: 'DestroyMachine',
-      component: DestroyMachine
+      component: MachineDetails,
+      children: [
+        {
+          path: '/machine/:vmName/',
+          name: 'UsageGraphs',
+          component: UsageGraphs
+        },
+        {
+          path: '/machine/:vmName/console',
+          name: 'AccessConsole',
+          component: AccessConsole
+        },
+        {
+          path: '/machine/:vmName/destroy',
+          name: 'DestroyMachine',
+          component: DestroyMachine
+        }
+      ]
     },
     {
       path: '/storage',
