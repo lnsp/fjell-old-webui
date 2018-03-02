@@ -94,9 +94,9 @@
         <div class="col">
           <h5>Choose your hostnames whisely!</h5>
           <transition-group name="fade">
-            <div v-for="name in instanceNames" :key="name" class="row">
+            <div v-for="(name, index) in instanceNames" :key="index" class="row">
               <div class="input-group input-group-fixed m-3">
-                <input type="text" class="form-control" :value="name" />
+                <input type="text" class="form-control" v-model="instanceNames[index]"/>
               </div>
             </div>
           </transition-group>
