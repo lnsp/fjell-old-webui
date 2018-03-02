@@ -1,19 +1,3 @@
-let prefix = [
-  'gitlab',
-  'vmware',
-  'docker',
-  'kubernetes',
-  'etcd'
-]
-
-let suffix = [
-  'server',
-  'prod',
-  'node1',
-  'node2',
-  'node3'
-]
-
 let machineTiers = [
   { cpus: 1, memory: 1024, storage: 25, ID: '051b245a-ebbb-4008-8df8-7713371f1b12' },
   { cpus: 1, memory: 2048, storage: 50, ID: 'b8670386-6e18-48c0-a62d-d1cc19e076d5' },

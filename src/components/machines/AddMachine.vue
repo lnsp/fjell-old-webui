@@ -11,7 +11,7 @@
             <div slot-scope="props">
               <div class="card-header text-center">{{ props.item.name }}</div>
               <img class="card-img-top os-icon"
-                :src="require('../../assets/distros/' + props.item.slug + (props.has(props.item) ? '' : '_offline') + '.svg')">
+                :src="require('../../assets/distros/' + props.item.slug + (props.has(props.item) ? '' : '_offline') + '.svg')" height="150px">
               <div class="card-body">
                 <div class="btn-group w-100 justify-content-center"  role="group">
                   <button v-for="(version, index) in props.item.versions" :key="version"
@@ -205,8 +205,14 @@ export default {
   font-weight: 100;
 }
 .os-icon {
-  padding: 20%;
+  padding: 10%;
   background-color: #6C757D;
+}
+
+@media (max-width: 600px) {
+  .os-icon {
+    padding: 0%;
+  }
 }
 .active .os-icon {
   background-color: #007bff;

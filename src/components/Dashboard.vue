@@ -188,10 +188,14 @@ export default {
   transform: translateY(-20px);
 }
 .copy-action-label {
+  /*
   position: absolute;
   right: 1em;
+  */
+  position: absolute;
   color: #007bff;
   font-size: 0.8em;
+  right: -5em;
 }
 .copy-action-container {
   position: relative;

@@ -1,16 +1,11 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div>
+    <site-header title="Storage" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Storage',
-  data () {
-    return {
-      msg: 'Storage'
-    }
-  }
+  name: 'StorageDashboard'
 }
 </script>

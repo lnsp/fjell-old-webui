@@ -1,20 +1,20 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand navbar-dark bg-primary mb-4">
+    <nav class="mb-3 mt-3">
       <div class="container">
         <div class="row w-100 m-0 align-items-center justify-content-between">
-          <div class="col-auto ml-md-3 pl-0 order-1">
-            <router-link :to="{ name: 'Dashboard' }" class="navbar-brand main-nav-brand">
+          <div class="col-auto pl-0 order-1">
+            <router-link :to="{ name: 'Dashboard' }" class="main-nav-brand">
               <!--<img :src="require('./assets/logo.svg')" style="width: 2em">!-->
               <strong>Paddle</strong>
             </router-link>
           </div>
           <div class="col-sm-12 col-md-auto pl-0 order-md-2 order-3">
-            <ul class="navbar-nav mr-auto main-nav-pills">
-              <li class="nav-item">
-                <router-link :to="{ name: 'Dashboard' }" class="nav-link pl-0 pl-md-1">Dashboard</router-link>
+            <ul class="nav main-nav-pills">
+              <li class="nav-item mr-3">
+                <router-link :to="{ name: 'Dashboard' }" class="nav-link">Dashboard</router-link>
               </li>
-              <li class="nav-item">
+              <li class="nav-item mr-3">
                 <router-link :to="{ name: 'Storage' }" class="nav-link">Storage</router-link>
               </li>
               <li class="nav-item">
@@ -25,13 +25,13 @@
           <div class="col-auto order-md-3 order-2">
             <div class="my-2 my-lg-0 main-nav-dropdown">
               <div class="btn-group add-service-dropdown">
-                <button class="btn btn-primary dropdown-toggle d-flex align-items-center" type="button" id="addDropdownToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-success dropdown-toggle d-flex align-items-center" type="button" id="addDropdownToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <octicon name="plus"></octicon>
                   <strong>
                     <span class="ml-2">Add</span>
                   </strong>
                 </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="addDropdownToggle">
+                <div class="dropdown-menu dropdown-menu-right add-instance-menu" aria-labelledby="addDropdownToggle">
                   <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'AddMachine' }">
                     Virtual Machine
                     <div class="small text-muted">Create virtual servers</div>
@@ -85,6 +85,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+/*
 .add-service-dropdown .dropdown-item:hover {
   background-color: #dfefff;
 }
@@ -96,6 +97,33 @@ export default {
 
 .add-service-dropdown .dropdown-item.disabled:hover {
   background-color: #fff;
+}
+*/
+.main-nav-brand {
+  font-size: 24px;
+}
+.main-nav-brand:hover {
+  text-decoration: none;
+}
+
+.main-nav-pills .nav-item a {
+  color: #777777;
+  font-weight: 500;
+  padding-left: 0;
+  padding-right: 0;
+}
+.main-nav-pills .nav-item a.active {
+  color: #007dff;
+  border-bottom: 5px solid #007dff;
+}
+.main-nav-pills .nav-item a:focus {
+  outline: none !important;
+}
+.add-instance-menu .dropdown-item:active {
+  background-color: #eee;
+  color: #212529;
+}
+.add-instance-menu .dropdown-item:focus {
 }
 </style>
 
