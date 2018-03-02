@@ -69,27 +69,6 @@ function fakeIPAddress () {
   return s.substring(0, s.length - 1)
 }
 
-function randomMachine () {
-  let name = prefix[Math.floor(Math.random() * prefix.length)] + '-' + suffix[Math.floor(Math.random() * prefix.length)]
-  let tier = machineTiers[Math.floor(Math.random() * machineTiers.length)]
-  let system = machineSystems[Math.floor(Math.random() * machineSystems.length)]
-  let systemVersion = system.versions[Math.floor(Math.random() * system.versions.length)]
-  let ip = fakeIPAddress()
-  return {
-    name: name,
-    memory: tier.memory,
-    storage: tier.storage,
-    cpus: tier.cpus,
-    systemName: system.name + ' ' + systemVersion,
-    systemSlug: system.slug,
-    tags: [],
-    ipAddress: ip,
-    deployProgress: 0,
-    offline: true,
-    createdAt: new Date()
-  }
-}
-
 var fakeKeys = [
   {
     name: 'Personal',
@@ -117,8 +96,6 @@ var fakeStorage = [
 ]
 
 var fakeMachines = []
-
-var fakeTimer = null
 
 export default {
   deployMachine (systemID, systemVersion, tierID, storageID, keys, names, callback) {
@@ -173,10 +150,5 @@ export default {
       element.offline = element.deployProgress < 100
     })
     callback(null, fakeMachines)
-    if (fakeTimer === null) {
-      fakeTimer = setInterval(() => {
-        fakeMachines.push(randomMachine())
-      }, Math.random() * 7500 + 5000)
-    }
   }
 }
