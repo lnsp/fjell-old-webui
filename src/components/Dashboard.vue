@@ -41,7 +41,7 @@
                   <span class="text-muted d-inline d-md-none">IP </span>
                 <span class="copy-action-ip" v-clipboard:copy="vm.ipAddress" v-on:click="toggleCopyIP(vm)">{{ vm.ipAddress }}</span>
                   <transition name="copy-action">
-                    <span class="copy-action-label" v-if="vm.showCopyState">Copied!</span>
+                    <span class="copy-action-label" v-if="showCopyFor === vm">Copied!</span>
                   </transition>
                 </div>
               </div>
@@ -91,12 +91,14 @@ export default {
       loading: false,
       refreshTimer: null,
       machines: [],
-      error: null
+      error: null,
+      showCopyFor: null
     }
   },
   created () {
     this.fetchData()
     this.refreshTimer = setInterval(this.fetchData, 1000)
+    this.showCopyFor = null
   },
   beforeDestroy () {
     this.cancelRefreshTimer()
@@ -120,10 +122,12 @@ export default {
     },
     toggleCopyIP (vm) {
       console.log('Show "Copied" for', vm.ipAddress)
-      vm.showCopyState = true
+      console.log('show')
+      this.showCopyFor = vm
+      console.log('showCopyFor')
       setTimeout(() => {
-        console.log('Hide "Copied" for ', vm.ipAddress)
-        vm.showCopyState = false
+        console.log('Hide "Copied" for', vm.ipAddress)
+        this.showCopyFor = null
       }, copyActionInterval)
     }
   }
@@ -179,10 +183,6 @@ export default {
   transform: translateY(-20px);
 }
 .copy-action-label {
-  /*
-  position: absolute;
-  right: 1em;
-  */
   position: absolute;
   color: #007bff;
   font-size: 0.8em;
