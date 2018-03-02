@@ -15,7 +15,7 @@
               <div class="card-body">
                 <div class="btn-group w-100 justify-content-center"  role="group">
                   <button v-for="(version, index) in props.item.versions" :key="version"
-                    @click="() => props.item.selectedVersion = index" class="btn col"
+                    @click="() => props.item.version = index" class="btn col"
                     :class="{ 'border-white': props.has(props.item), 'btn-secondary': !props.has(props.item), 'btn-primary': props.has(props.item), 'active': props.item.version === index }">
                     {{ version }}
                   </button>
