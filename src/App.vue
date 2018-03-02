@@ -26,7 +26,7 @@
             <div class="my-2 my-lg-0 main-nav-dropdown">
               <div class="btn-group add-service-dropdown">
                 <button class="btn btn-success dropdown-toggle d-flex align-items-center" type="button" id="addDropdownToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <octicon name="plus"></octicon>
+                  <icon name="plus"></icon>
                   <strong>
                     <span class="ml-2">Add</span>
                   </strong>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <site-header title="Storage" />
+    <site-header>Storage</site-header>
   </div>
 </template>
 

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <site-header title="Add virtual machine" />
+    <site-header>Add a virtual machine</site-header>
     <div class="add-vm">
-      <h3 class="mb-3">Choose an image</h3>
+      <site-subheader>Choose an image</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
         <p v-if="systems === null" class="text-center lead">Fetching available distributions ...</p>
@@ -27,7 +27,7 @@
       </transition>
     </div>
     <div>
-      <h3 class="mb-3 mt-3">Choose a size</h3>
+      <site-subheader>Choose a size</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
         <p v-if="sizes === null" class="text-center lead">Fetching available machine sizes ...</p>
@@ -43,7 +43,7 @@
       </transition>
     </div>
     <div>
-      <h3 class="mb mt-3">Add block storage</h3>
+      <site-subheader>Add block storage</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
         <p key="if" v-if="blocks === null" class="text-center lead">Fetching block storage ...</p>
@@ -65,7 +65,7 @@
       </transition>
     </div>
     <div>
-      <h3 class="mb mt-3">Add an SSH key</h3>
+      <site-subheader>Add an SSH key</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
         <p key="if" v-if="keys === null" class="text-center lead">Fetching SSH keys ...</p>
@@ -83,7 +83,7 @@
       </transition>
     </div>
     <div class="finalize-machine">
-      <h3 class="mb mt-3">Create and finalize</h3>
+      <site-subheader>Create and finalize</site-subheader>
       <hr />
       <div class="row mb-3">
         <div class="col-sm-4">

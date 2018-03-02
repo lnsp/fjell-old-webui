@@ -5,12 +5,34 @@
     <p>
       Are you sure you want to do this? All data stored directly on the system will be lost and not recoverable. Please use with caution.
     </p>
-    <button class="btn btn-outline-danger">Yes, I understand!</button>
+    <button class="btn btn-outline-danger d-flex align-items-center" @click="destroyMachine()">
+      <icon name="circle-o-notch" spin class="mr-2" :class="{ 'd-none': !active }" />
+      Yes, I understand!
+    </button>
   </div>
 </template>
 
 <script>
+import API from '@/API'
 export default {
-  name: 'DestroyMachine'
+  name: 'DestroyMachine',
+  data () {
+    return {
+      active: false
+    }
+  },
+  methods: {
+    destroyMachine () {
+      this.active = true
+      API.toggleMachineDestroy((err) => {
+        this.active = false
+        if (err) {
+          console.log(err)
+        } else {
+          this.$router.push({ name: 'Dashboard' })
+        }
+      }, this.$route.params.vmName)
+    }
+  }
 }
 </script>

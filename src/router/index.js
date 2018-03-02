@@ -10,6 +10,7 @@ import AddDomain from '@/components/networking/AddDomain'
 import MachineDetails from '@/components/machines/MachineDetails'
 import UsageGraphs from '@/components/machines/details/UsageGraphs'
 import AccessConsole from '@/components/machines/details/AccessConsole'
+import PowerControl from '@/components/machines/details/PowerControl'
 import DestroyMachine from '@/components/machines/details/DestroyMachine'
 
 Vue.use(Router)
@@ -33,7 +34,6 @@ export default new Router({
     },
     {
       path: '/machine/:vmName',
-      name: 'MachineDetails',
       component: MachineDetails,
       children: [
         {
@@ -50,6 +50,11 @@ export default new Router({
           path: '/machine/:vmName/destroy',
           name: 'DestroyMachine',
           component: DestroyMachine
+        },
+        {
+          path: '/machine/:vmName/power',
+          name: 'PowerControl',
+          component: PowerControl
         }
       ]
     },

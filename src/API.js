@@ -103,7 +103,7 @@ export default {
         ipAddress: fakeIPAddress(),
         deployProgress: 0,
         offline: true,
-        createdAt: new Date()
+        createdAt: new Date().toUTCString()
       })
     })
     callback(null)
@@ -126,6 +126,26 @@ export default {
   getMachineByName (callback, name) {
     setTimeout(() => callback(null, fakeMachines.filter(m => m.name === name)[0]), Math.random() * 750 + 250)
   },
+  getUsageStatsCPU (callback, name) {
+    var labels = Array.apply(null, { length: 100 }).map((value, index, _) => new Date(new Date().getTime() - (100 - index) * 60000))
+    var values = Array.apply(null, { length: 100 }).map((value, index, _) => Math.random() * index)
+    setTimeout(() => callback(null, { labels: labels, data: values }), Math.random() * 750 + 250)
+  },
+  toggleMachineReboot (callback, name) {
+    let vm = fakeMachines.find(vm => vm.name === name)
+    setTimeout(() => { vm.offline = true }, Math.random() * 750 + 250)
+    setTimeout(() => { vm.offline = false }, Math.random() * 5000 + 15000)
+    setTimeout(() => callback(null), Math.random() * 750 + 250)
+  },
+  toggleMachinePower (callback, name) {
+    let vm = fakeMachines.find(vm => vm.name === name)
+    setTimeout(() => { vm.offline = !vm.offline }, Math.random() * 750 + 250)
+    setTimeout(() => callback(null), Math.random() * 750 + 250)
+  },
+  toggleMachineDestroy (callback, name) {
+    fakeMachines = fakeMachines.filter(vm => vm.name !== name)
+    setTimeout(() => callback(null), Math.random() * 750 + 250)
+  },
   getDeployedMachines (callback) {
     fakeMachines.forEach(element => {
       if (element.deployProgress < 100) {
@@ -133,6 +153,6 @@ export default {
       }
       element.offline = element.deployProgress < 100
     })
-    callback(null, fakeMachines)
+    setTimeout(() => callback(null, fakeMachines), Math.random() * 750 + 250)
   }
 }

@@ -10,6 +10,11 @@
         <ul class="nav flex-row flex-sm-column" :class="{ 'nav-tabs mb-3': windowWidth < 600 }" >
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'UsageGraphs', params: { vmName: $route.params.vmName } }">Graphs</router-link></li>
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'AccessConsole', params: { vmName: $route.params.vmName } }">Console</router-link></li>
+          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'PowerControl', params: { vmName: $route.params.vmName } }">Power</router-link></li>
+          <li class="nav-item"><a class="nav-link" href="#">Volumes</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Resize</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Networking</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Snapshots</a></li>
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'DestroyMachine', params: { vmName: $route.params.vmName } }">Destroy</router-link></li>
         </ul>
       </div>
@@ -71,5 +76,8 @@ export default {
   .machine-header {
     font-size: 20px;
   }
+}
+p {
+  color: #6c757d;
 }
 </style>

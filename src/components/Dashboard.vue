@@ -1,13 +1,6 @@
 <template>
   <div>
-    <site-header title="Dashboard" />
-    <div class="loading" v-if="loading">
-      Loading ...
-    </div>
-    <div v-if="error" class="error">
-      {{ error }}
-    </div>
-
+    <site-header>Dashboard</site-header>
     <div v-if="machines" class="dashboard-table mb-3">
       <div class="dashboard-header row d-none d-md-flex">
         <div class="dashboard-cell col-3 col-sm-5">Name</div>
@@ -21,7 +14,7 @@
         <transition-group name="progress-action">
         <div class="dashboard-row row align-items-center justify-content-between" v-for="vm in machines" :key="vm.ipAddress">
           <div class="dashboard-cell col-12 col-md-5">
-            <div class="dashboard-machine-info row align-items-center" @click="$router.push({ name: 'MachineDetails', params: { vmName: vm.name }})">
+            <div class="dashboard-machine-info row align-items-center" @click="$router.push({ name: 'UsageGraphs', params: { vmName: vm.name }})">
               <div class="col-auto">
                 <transition name="deploy-action" mode="out-in">
                   <img key="logo-offline" v-if="vm.offline" :src="require('../assets/distros/' + vm.systemSlug + '_offline.svg')" class="dashboard-distro-logo">
@@ -55,7 +48,7 @@
               <div class="d-none d-sm-inline col text-right col-md-4">
                 <span class="text-muted d-inline d-md-none">Created </span>
                 <span>
-                {{ vm.createdAt | moment("from", true) }} ago
+                {{ vm.createdAt | moment('from', true) }} ago
                 </span>
               </div>
               <div class="col-md-4 d-none d-md-flex">
@@ -97,7 +90,7 @@ export default {
       msg: 'Dashboard',
       loading: false,
       refreshTimer: null,
-      machines: null,
+      machines: [],
       error: null
     }
   },
@@ -116,8 +109,6 @@ export default {
       clearInterval(this.refreshTimer)
     },
     fetchData () {
-      this.error = this.machines = null
-      this.loading = true
       API.getDeployedMachines((err, machines) => {
         this.loading = false
         if (err) {

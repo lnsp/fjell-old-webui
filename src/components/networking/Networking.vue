@@ -1,6 +1,6 @@
 <template>
   <div>
-    <site-header title="Networking" />
+    <site-header>Networking</site-header>
   </div>
 </template>
 
