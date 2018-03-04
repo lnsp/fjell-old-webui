@@ -5,7 +5,7 @@
       <site-subheader>Choose an image</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
-        <p v-if="systems === null" class="text-center lead">Fetching available distributions ...</p>
+        <p v-if="systems === null" class="text-center text-muted"><icon name="circle-o-notch" spin /></p>
         <div v-else>
           <card-selector :items="systems" @input="system => { selected.system = system; updateInstanceAllowance() }">
             <div slot-scope="props">
@@ -30,7 +30,7 @@
       <site-subheader>Choose a size</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
-        <p v-if="sizes === null" class="text-center lead">Fetching available machine sizes ...</p>
+        <p v-if="sizes === null" class="text-center"><icon name="circle-o-notch" spin /></p>
         <div v-else>
           <card-selector :items="sizes" @input="size => { selected.size = size; updateInstanceAllowance() }">
             <div slot-scope="props">
@@ -46,7 +46,7 @@
       <site-subheader>Add block storage</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
-        <p key="if" v-if="blocks === null" class="text-center lead">Fetching block storage ...</p>
+        <p key="if" v-if="blocks === null" class="text-center"><icon name="circle-o-notch" spin></icon></p>
         <p key="elseif" v-else-if="blocks.length === 0" class="text-center lead">
           No block storage available.
         </p>
@@ -68,7 +68,7 @@
       <site-subheader>Add an SSH key</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
-        <p key="if" v-if="keys === null" class="text-center lead">Fetching SSH keys ...</p>
+        <p key="if" v-if="keys === null" class="text-center lead"><icon name="circle-o-notch" spin /></p>
         <p key="elseif" v-else-if="keys.length === 0" class="text-center lead">
           No keys available.
         </p>
