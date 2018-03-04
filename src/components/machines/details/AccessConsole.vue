@@ -1,12 +1,56 @@
 <template>
   <div>
-    <h4>Console</h4>
-    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+    <site-subheader>Console</site-subheader>
+    <hr />
+    <site-subsubheader>Access via VNC</site-subsubheader>
+    <p>
+      If the host machine supports it, you can access your machine via <code>noVNC</code>.
+    </p>
+    <a :href="vncURL" class="btn btn-outline-primary" :class="{ 'disabled': !vncURL }" target="_blank">Access via VNC</a>
+    <hr />
+    <site-subsubheader>Access via SSH</site-subsubheader>
+    <p>
+      You should be able to access the machine using the following SSH keys.
+    </p>
+    <ul>
+      <li v-for="key in sshKeys" :key="key" class="text-muted"><strong>{{ key.name }}</strong> <code>{{ key.fingerprint }}</code></li>
+    </ul>
   </div>
 </template>
 
 <script>
+import API from '@/API'
 export default {
-  name: 'AccessConsole'
+  name: 'AccessConsole',
+  data () {
+    return {
+      vncURL: null,
+      sshKeys: []
+    }
+  },
+  created () {
+    this.updateVNCURL()
+    this.updateSSHKeys()
+  },
+  methods: {
+    updateSSHKeys () {
+      API.getMachineByName((err, machine) => {
+        if (err) {
+          console.log(err)
+        } else {
+          this.sshKeys = machine.keys
+        }
+      }, this.$route.params.vmName)
+    },
+    updateVNCURL () {
+      API.getMachineVNCSessionURL((err, url) => {
+        if (err) {
+          console.log(err)
+        } else {
+          this.vncURL = url
+        }
+      }, this.$route.params.vmName)
+    }
+  }
 }
 </script>
