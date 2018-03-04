@@ -82,7 +82,7 @@ var fakeStorage = [
 var fakeMachines = []
 
 export default {
-  deployMachine (systemID, systemVersion, tierID, storageID, keys, names, callback) {
+  deployMachine (systemID, systemVersion, tierID, buckets, keys, names, callback) {
     names.forEach(name => {
       var selectedTier = null
       machineTiers.forEach(tier => {
@@ -96,6 +96,8 @@ export default {
         name: name,
         memory: selectedTier.memory,
         cpus: selectedTier.cpus,
+        keys: keys,
+        buckets: buckets,
         storage: selectedTier.storage,
         systemName: selectedSystem.name + ' ' + selectedSystem.versions[systemVersion],
         systemSlug: selectedSystem.slug,
@@ -130,6 +132,9 @@ export default {
     var labels = Array.apply(null, { length: 100 }).map((value, index, _) => new Date(new Date().getTime() - (100 - index) * 60000))
     var values = Array.apply(null, { length: 100 }).map((value, index, _) => Math.random() * index)
     setTimeout(() => callback(null, { labels: labels, data: values }), Math.random() * 750 + 250)
+  },
+  getMachineVNCSessionURL (callback, name) {
+    setTimeout(() => callback(null, 'javascript:alert("getMachineVNCSession")'), Math.random() * 750 + 250)
   },
   toggleMachineReboot (callback, name) {
     let vm = fakeMachines.find(vm => vm.name === name)
