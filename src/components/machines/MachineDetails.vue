@@ -14,7 +14,7 @@
           <li class="nav-item"><a class="nav-link" href="#">Volumes</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Resize</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Networking</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Snapshots</a></li>
+          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'Snapshots', params: { vmName: $route.params.vmName } }">Snapshots</router-link></li>
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'DestroyMachine', params: { vmName: $route.params.vmName } }">Destroy</router-link></li>
         </ul>
       </div>

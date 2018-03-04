@@ -79,11 +79,53 @@ var fakeStorage = [
   }
 ]
 
+var fakeSnapshots = [
+  {
+    ID: '10a61208-23cc-4820-be2f-43b14006ccff',
+    size: 12345,
+    date: new Date(1974, 6),
+    systemID: 'b464e258-c34e-47f2-8011-e6a861eb8ecd',
+    tierID: 'b8670386-6e18-48c0-a62d-d1cc19e076d5'
+  },
+  {
+    ID: 'd7829fde-823b-4bf6-a2e6-e9b7b36b4831',
+    size: 20000,
+    date: new Date(1980, 1),
+    systemID: 'b464e258-c34e-47f2-8011-e6a861eb8ecd',
+    tierID: 'b8670386-6e18-48c0-a62d-d1cc19e076d5'
+  },
+  {
+    ID: 'b464e258-c34e-47f2-8011-e6a861eb8ecd',
+    size: 42000,
+    date: new Date(2016, 2),
+    systemID: 'b464e258-c34e-47f2-8011-e6a861eb8ecd',
+    tierID: 'b8670386-6e18-48c0-a62d-d1cc19e076d5'
+  }
+]
+
+let defaultLatencyVariance = 0
+let defaultLatencyMin = 0
+
+function delay (callback) {
+  setTimeout(callback, defaultLatencyVariance * Math.random() + defaultLatencyMin)
+}
+
 var fakeMachines = []
+
+function guid () {
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4()
+}
+
+function s4 () {
+  return Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1)
+}
 
 export default {
   // Request a domain deployment of the given configuration.
-  deployMachine (systemID, systemVersion, tierID, buckets, keys, names, callback) {
+  deployMachine (systemID, systemVersion, tierID, blocks, keys, names, callback) {
     names.forEach(name => {
       var selectedTier = null
       machineTiers.forEach(tier => {
@@ -98,7 +140,8 @@ export default {
         memory: selectedTier.memory,
         cpus: selectedTier.cpus,
         keys: keys,
-        buckets: buckets,
+        blocks: blocks,
+        snapshots: fakeSnapshots,
         storage: selectedTier.storage,
         systemName: selectedSystem.name + ' ' + selectedSystem.versions[systemVersion],
         systemSlug: selectedSystem.slug,
@@ -106,30 +149,34 @@ export default {
         ipAddress: fakeIPAddress(),
         deployProgress: 0,
         offline: true,
-        createdAt: new Date().toUTCString()
+        createdAt: new Date().toUTCString(),
+        ID: guid()
       })
     })
     callback(null)
   },
+  deploySnapshot (callback, id) {
+    delay(() => callback(null))
+  },
   // Get the user's allowance of a given machine tier.
   getConfigurationAllowance (callback, size) {
-    setTimeout(() => callback(null, { min: 1, max: 10 }), Math.random() * 750 + 250)
+    delay(() => callback(null, { min: 1, max: 10 }))
   },
   // Get the available size options.
   getConfigurationOptionSize (callback) {
-    setTimeout(() => callback(null, machineTiers), Math.random() * 750 + 250)
+    delay(() => callback(null, machineTiers))
   },
   // Get the available operating system configuration options.
   getConfigurationOptionSystem (callback) {
-    setTimeout(() => callback(null, machineSystems), Math.random() * 750 + 250)
+    delay(() => callback(null, machineSystems))
   },
   // List all available block storage.
   getDeployedBlockStorage (callback) {
-    setTimeout(() => callback(null, fakeStorage), Math.random() * 750 + 250)
+    delay(() => callback(null, fakeStorage))
   },
   // List all available SSH keys.
   getDeployedSSHKeys (callback) {
-    setTimeout(() => callback(null, fakeKeys), Math.random() * 750 + 250)
+    delay(() => callback(null, fakeKeys))
   },
   // List all available machines.
   getDeployedMachines (callback) {
@@ -141,19 +188,22 @@ export default {
       }
       if (offlineSwitch) element.offline = element.deployProgress < 100
     })
-    setTimeout(() => callback(null, fakeMachines), Math.random() * 750 + 250)
+    delay(() => callback(null, fakeMachines))
   },
   // Get machine configuration information.
   getMachineByName (callback, name) {
-    setTimeout(() => callback(null, fakeMachines.filter(m => m.name === name)[0]), Math.random() * 750 + 250)
+    delay(() => callback(null, fakeMachines.filter(m => m.name === name)[0]))
+  },
+  getMachineByID (callback, id) {
+    delay(() => callback(null, fakeMachines.filter(m => m.ID === id)[0]))
   },
   getMachineStatsCPUUsage (callback, name) {
     var labels = Array.apply(null, { length: 100 }).map((value, index, _) => new Date(new Date().getTime() - (100 - index) * 60000))
     var values = Array.apply(null, { length: 100 }).map((value, index, _) => Math.random() * index)
-    setTimeout(() => callback(null, { labels: labels, data: values }), Math.random() * 750 + 250)
+    delay(() => callback(null, { labels: labels, data: values }))
   },
   getMachineAccessVNCUrl (callback, name) {
-    setTimeout(() => callback(null, 'javascript:alert("getMachineVNCSession")'), Math.random() * 750 + 250)
+    delay(() => callback(null, 'javascript:alert("getMachineVNCSession")'))
   },
   toggleMachineReboot (callback, name) {
     let vm = fakeMachines.find(vm => vm.name === name)
@@ -168,6 +218,6 @@ export default {
   },
   toggleMachineDestroy (callback, name) {
     fakeMachines = fakeMachines.filter(vm => vm.name !== name)
-    setTimeout(() => callback(null), Math.random() * 750 + 250)
+    delay(() => callback(null))
   }
 }

@@ -12,6 +12,7 @@ import UsageGraphs from '@/components/machines/details/UsageGraphs'
 import AccessConsole from '@/components/machines/details/AccessConsole'
 import PowerControl from '@/components/machines/details/PowerControl'
 import DestroyMachine from '@/components/machines/details/DestroyMachine'
+import Snapshots from '@/components/machines/details/Snapshots'
 
 Vue.use(Router)
 
@@ -37,24 +38,29 @@ export default new Router({
       component: MachineDetails,
       children: [
         {
-          path: '/machine/:vmName/',
+          path: '/',
           name: 'UsageGraphs',
           component: UsageGraphs
         },
         {
-          path: '/machine/:vmName/console',
+          path: '/console',
           name: 'AccessConsole',
           component: AccessConsole
         },
         {
-          path: '/machine/:vmName/destroy',
+          path: '/destroy',
           name: 'DestroyMachine',
           component: DestroyMachine
         },
         {
-          path: '/machine/:vmName/power',
+          path: '/power',
           name: 'PowerControl',
           component: PowerControl
+        },
+        {
+          path: '/snapshots',
+          name: 'Snapshots',
+          component: Snapshots
         }
       ]
     },
