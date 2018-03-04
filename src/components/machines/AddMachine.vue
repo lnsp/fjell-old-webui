@@ -1,7 +1,7 @@
 <template>
   <div>
     <site-header>Add a virtual machine</site-header>
-    <div class="add-vm">
+    <div class="add-vm mb-3">
       <site-subheader>Choose an image</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
@@ -26,7 +26,7 @@
         </div>
       </transition>
     </div>
-    <div>
+    <div class="mb-3">
       <site-subheader>Choose a size</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
@@ -42,7 +42,7 @@
         </div>
       </transition>
     </div>
-    <div>
+    <div class="mb-3">
       <site-subheader>Add block storage</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
@@ -51,7 +51,7 @@
           No block storage available.
         </p>
         <div v-else>
-          <card-selector :items="blocks" mode="toggle" size="small" @input="blocks => selected.blocks = blocks">
+          <card-selector :items="blocks" mode="toggle" size="small" @input="blocks => { selected.blocks = blocks; updateInstanceAllowance() }">
             <div slot-scope="props">
               <div class="card-header text-center">
                 {{ props.item.name }}
@@ -64,7 +64,7 @@
         </div>
       </transition>
     </div>
-    <div>
+    <div class="mb-3">
       <site-subheader>Add an SSH key</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
@@ -73,7 +73,7 @@
           No keys available.
         </p>
         <div v-else>
-          <card-selector :items="keys" mode="toggle" size="small" @input="keys => selected.keys = keys">
+          <card-selector :items="keys" mode="toggle" size="small" @input="keys => { selected.keys = keys; updateInstanceAllowance() }">
             <div class="card-body text-center" slot-scope="props" >
               <strong>{{ props.item.name }}</strong>
               <small>{{ props.item.fingerprint }}</small>
@@ -81,6 +81,9 @@
           </card-selector>
         </div>
       </transition>
+      <p class="text-muted">
+        You have to choose at least one SSH key.
+      </p>
     </div>
     <div class="finalize-machine">
       <site-subheader>Create and finalize</site-subheader>
@@ -182,19 +185,25 @@ export default {
     },
     updateInstanceNames () {
       this.instanceNames = []
-      for (var i = 0; i < this.instanceCount && this.selected.system && this.selected.size; i++) {
+      for (var i = 0; i < this.instanceCount; i++) {
         let systemSlug = this.selected.system.slug
         let systemVersionSlug = this.slugged(this.selected.system.versions[this.selected.system.version])
         this.instanceNames.push(systemSlug + '-' + systemVersionSlug + '-' + this.selected.size.memory + 'mb-' + i)
       }
     },
     updateInstanceAllowance () {
-      this.wrapAPICall(API.getInstanceAllowanceOf, (allowance) => {
-        this.maxInstances = allowance.max
-        this.minInstances = allowance.min
-        this.instanceCount = Math.min(this.maxInstances, Math.max(this.minInstances, this.instanceCount))
-        this.updateInstanceNames()
-      }, [])
+      if (this.selected.system && this.selected.size && this.selected.keys.length > 0) {
+        this.wrapAPICall(API.getInstanceAllowanceOf, (allowance) => {
+          this.maxInstances = allowance.max
+          this.minInstances = allowance.min
+          this.instanceCount = Math.min(this.maxInstances, Math.max(this.minInstances, this.instanceCount))
+          this.updateInstanceNames()
+        }, this.selected.size)
+      } else {
+        this.maxInstances = 0
+        this.minInstances = 0
+        this.instanceCount = 0
+      }
     }
   }
 }
