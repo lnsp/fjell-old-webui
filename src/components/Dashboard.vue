@@ -14,7 +14,7 @@
         <transition-group name="progress-action">
         <div class="dashboard-row row align-items-center justify-content-between" v-for="vm in machines" :key="vm.ipAddress">
           <div class="dashboard-cell col-12 col-md-5">
-            <div class="dashboard-machine-info row align-items-center" @click="$router.push({ name: 'UsageGraphs', params: { vmName: vm.name }})">
+            <div class="dashboard-machine-info row align-items-center" @click="() => { if (vm.deployProgress === 100) $router.push({ name: 'UsageGraphs', params: { vmName: vm.name }}) }">
               <div class="col-auto">
                 <transition name="deploy-action" mode="out-in">
                   <img key="logo-offline" v-if="vm.offline" :src="require('../assets/distros/' + vm.systemSlug + '_offline.svg')" class="dashboard-distro-logo">
