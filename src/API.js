@@ -148,10 +148,12 @@ export default {
   },
   getDeployedMachines (callback) {
     fakeMachines.forEach(element => {
+      var offlineSwitch = false
       if (element.deployProgress < 100) {
+        offlineSwitch = true
         element.deployProgress = Math.min(element.deployProgress + Math.random() * 10 + 1, 100)
       }
-      element.offline = element.deployProgress < 100
+      if (offlineSwitch) element.offline = element.deployProgress < 100
     })
     setTimeout(() => callback(null, fakeMachines), Math.random() * 750 + 250)
   }
