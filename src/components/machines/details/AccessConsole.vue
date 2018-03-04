@@ -13,7 +13,7 @@
       You should be able to access the machine using the following SSH keys.
     </p>
     <ul>
-      <li v-for="key in sshKeys" :key="key" class="text-muted"><strong>{{ key.name }}</strong> <code>{{ key.fingerprint }}</code></li>
+      <li v-for="key in sshKeys" :key="key.ID" class="text-muted"><strong>{{ key.name }}</strong> <code>{{ key.fingerprint }}</code></li>
     </ul>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
       }, this.$route.params.vmName)
     },
     updateVNCURL () {
-      API.getMachineVNCSessionURL((err, url) => {
+      API.getMachineAccessVNCUrl((err, url) => {
         if (err) {
           console.log(err)
         } else {

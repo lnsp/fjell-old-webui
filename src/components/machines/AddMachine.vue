@@ -154,10 +154,10 @@ export default {
       }].concat(args))
     },
     fetchOptions () {
-      this.wrapAPICall(API.getMachineSystemOptions, systems => {
+      this.wrapAPICall(API.getConfigurationOptionSystem, systems => {
         this.systems = systems.map(system => Object.assign({ version: system.defaultVersion }, system))
       }, [])
-      this.wrapAPICall(API.getMachineSizeOptions, sizes => {
+      this.wrapAPICall(API.getConfigurationOptionSize, sizes => {
         this.sizes = sizes
       }, [])
       this.wrapAPICall(API.getDeployedBlockStorage, blocks => {
@@ -193,7 +193,7 @@ export default {
     },
     updateInstanceAllowance () {
       if (this.selected.system && this.selected.size && this.selected.keys.length > 0) {
-        this.wrapAPICall(API.getInstanceAllowanceOf, (allowance) => {
+        this.wrapAPICall(API.getConfigurationAllowance, (allowance) => {
           this.maxInstances = allowance.max
           this.minInstances = allowance.min
           this.instanceCount = Math.min(this.maxInstances, Math.max(this.minInstances, this.instanceCount))

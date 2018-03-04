@@ -82,6 +82,7 @@ var fakeStorage = [
 var fakeMachines = []
 
 export default {
+  // Request a domain deployment of the given configuration.
   deployMachine (systemID, systemVersion, tierID, buckets, keys, names, callback) {
     names.forEach(name => {
       var selectedTier = null
@@ -110,30 +111,48 @@ export default {
     })
     callback(null)
   },
-  getInstanceAllowanceOf (callback, tier) {
+  // Get the user's allowance of a given machine tier.
+  getConfigurationAllowance (callback, size) {
     setTimeout(() => callback(null, { min: 1, max: 10 }), Math.random() * 750 + 250)
   },
-  getMachineSizeOptions (callback) {
+  // Get the available size options.
+  getConfigurationOptionSize (callback) {
     setTimeout(() => callback(null, machineTiers), Math.random() * 750 + 250)
   },
-  getMachineSystemOptions (callback) {
+  // Get the available operating system configuration options.
+  getConfigurationOptionSystem (callback) {
     setTimeout(() => callback(null, machineSystems), Math.random() * 750 + 250)
   },
+  // List all available block storage.
   getDeployedBlockStorage (callback) {
     setTimeout(() => callback(null, fakeStorage), Math.random() * 750 + 250)
   },
+  // List all available SSH keys.
   getDeployedSSHKeys (callback) {
     setTimeout(() => callback(null, fakeKeys), Math.random() * 750 + 250)
   },
+  // List all available machines.
+  getDeployedMachines (callback) {
+    fakeMachines.forEach(element => {
+      var offlineSwitch = false
+      if (element.deployProgress < 100) {
+        offlineSwitch = true
+        element.deployProgress = Math.min(element.deployProgress + Math.random() * 10 + 1, 100)
+      }
+      if (offlineSwitch) element.offline = element.deployProgress < 100
+    })
+    setTimeout(() => callback(null, fakeMachines), Math.random() * 750 + 250)
+  },
+  // Get machine configuration information.
   getMachineByName (callback, name) {
     setTimeout(() => callback(null, fakeMachines.filter(m => m.name === name)[0]), Math.random() * 750 + 250)
   },
-  getUsageStatsCPU (callback, name) {
+  getMachineStatsCPUUsage (callback, name) {
     var labels = Array.apply(null, { length: 100 }).map((value, index, _) => new Date(new Date().getTime() - (100 - index) * 60000))
     var values = Array.apply(null, { length: 100 }).map((value, index, _) => Math.random() * index)
     setTimeout(() => callback(null, { labels: labels, data: values }), Math.random() * 750 + 250)
   },
-  getMachineVNCSessionURL (callback, name) {
+  getMachineAccessVNCUrl (callback, name) {
     setTimeout(() => callback(null, 'javascript:alert("getMachineVNCSession")'), Math.random() * 750 + 250)
   },
   toggleMachineReboot (callback, name) {
@@ -150,16 +169,5 @@ export default {
   toggleMachineDestroy (callback, name) {
     fakeMachines = fakeMachines.filter(vm => vm.name !== name)
     setTimeout(() => callback(null), Math.random() * 750 + 250)
-  },
-  getDeployedMachines (callback) {
-    fakeMachines.forEach(element => {
-      var offlineSwitch = false
-      if (element.deployProgress < 100) {
-        offlineSwitch = true
-        element.deployProgress = Math.min(element.deployProgress + Math.random() * 10 + 1, 100)
-      }
-      if (offlineSwitch) element.offline = element.deployProgress < 100
-    })
-    setTimeout(() => callback(null, fakeMachines), Math.random() * 750 + 250)
   }
 }

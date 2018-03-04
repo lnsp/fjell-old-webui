@@ -17,13 +17,12 @@ export default {
   },
   methods: {
     updateFromAPI () {
-      API.getUsageStatsCPU((err, resp) => {
+      API.getMachineStatsCPUUsage((err, resp) => {
         if (err) {
           console.log(err)
         } else {
           this.cpuUsage = this.buildDataset(resp.labels, resp.data)
         }
-        console.log(JSON.stringify(resp))
       }, this.$route.params.vmName)
     },
     buildDataset (labels, stats) {
