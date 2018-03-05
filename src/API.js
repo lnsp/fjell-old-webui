@@ -83,28 +83,22 @@ var fakeSnapshots = [
   {
     ID: '10a61208-23cc-4820-be2f-43b14006ccff',
     size: 12345,
-    date: new Date(1974, 6),
-    systemID: 'b464e258-c34e-47f2-8011-e6a861eb8ecd',
-    tierID: 'b8670386-6e18-48c0-a62d-d1cc19e076d5'
+    createdAt: new Date(1974, 6)
   },
   {
     ID: 'd7829fde-823b-4bf6-a2e6-e9b7b36b4831',
     size: 20000,
-    date: new Date(1980, 1),
-    systemID: 'b464e258-c34e-47f2-8011-e6a861eb8ecd',
-    tierID: 'b8670386-6e18-48c0-a62d-d1cc19e076d5'
+    createdAt: new Date(1980, 1)
   },
   {
     ID: 'b464e258-c34e-47f2-8011-e6a861eb8ecd',
     size: 42000,
-    date: new Date(2016, 2),
-    systemID: 'b464e258-c34e-47f2-8011-e6a861eb8ecd',
-    tierID: 'b8670386-6e18-48c0-a62d-d1cc19e076d5'
+    createdAt: new Date(2016, 2)
   }
 ]
 
 let defaultLatencyVariance = 0
-let defaultLatencyMin = 0
+let defaultLatencyMin = 750
 
 function delay (callback) {
   setTimeout(callback, defaultLatencyVariance * Math.random() + defaultLatencyMin)
@@ -154,9 +148,6 @@ export default {
       })
     })
     callback(null)
-  },
-  deploySnapshot (callback, id) {
-    delay(() => callback(null))
   },
   // Get the user's allowance of a given machine tier.
   getConfigurationAllowance (callback, size) {
@@ -218,6 +209,23 @@ export default {
   },
   toggleMachineDestroy (callback, name) {
     fakeMachines = fakeMachines.filter(vm => vm.name !== name)
+    delay(() => callback(null))
+  },
+  toggleSnapshotCreate (callback, vmName) {
+    let vm = fakeMachines.find(vm => vm.name === vmName)
+    vm.snapshots.push({
+      ID: guid(),
+      size: vm.storage * 1000,
+      createdAt: new Date()
+    })
+    delay(() => callback(null))
+  },
+  toggleSnapshotDelete (callback, vmName, id) {
+    let vm = fakeMachines.find(vm => vm.name === vmName)
+    vm.snapshots = vm.snapshots.filter(snap => snap.ID !== id)
+    delay(() => callback(null))
+  },
+  toggleSnapshotRestore (callback, vmName, id) {
     delay(() => callback(null))
   }
 }
