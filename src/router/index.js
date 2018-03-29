@@ -38,27 +38,27 @@ export default new Router({
       component: MachineDetails,
       children: [
         {
-          path: '/',
+          path: '/machine/:vmName/',
           name: 'UsageGraphs',
           component: UsageGraphs
         },
         {
-          path: '/console',
+          path: '/machine/:vmName/console',
           name: 'AccessConsole',
           component: AccessConsole
         },
         {
-          path: '/destroy',
+          path: '/machine/:vmName/destroy',
           name: 'DestroyMachine',
           component: DestroyMachine
         },
         {
-          path: '/power',
+          path: '/machine/:vmName/power',
           name: 'PowerControl',
           component: PowerControl
         },
         {
-          path: '/snapshots',
+          path: '/machine/:vmName/snapshots',
           name: 'Snapshots',
           component: Snapshots
         }
