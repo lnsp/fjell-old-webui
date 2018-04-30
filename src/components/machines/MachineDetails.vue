@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-4">
     <h3 class="machine-header"><span class="text-muted">Machine</span> <span class="machine-name">{{ $route.params.vmName }}</span></h3>
     <div v-if="systemSpecs" class="text-muted machine-specs">
       {{ systemSpecs.memory }} MB RAM / {{ systemSpecs.storage }} GB Disk / {{ systemSpecs.systemName }}
