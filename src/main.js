@@ -16,13 +16,13 @@ Vue.use(VueMoment)
 Vue.use(VueClipboard)
 Vue.component('icon', Icon)
 Vue.component('site-header', {
-  template: '<h2 style="font-weight: 300; margin-top: 2rem; margin-bottom: 0.5rem"><slot></slot></h2>'
+  template: '<h2 style="font-weight: 300; margin-bottom: 0.5rem"><slot></slot></h2>'
 })
 Vue.component('site-subheader', {
-  template: '<h4 style="font-weight: 300, margin-top: 2rem; margin-bottom: 0.5rem"><slot></slot></h4>'
+  template: '<h4 style="font-weight: 300, margin-bottom: 0.5rem"><slot></slot></h4>'
 })
 Vue.component('site-subsubheader', {
-  template: '<h5 style="color: #6c757d; margin-top: 1rem; margin-bottom: 0.5rem"><slot></slot></h5>'
+  template: '<h5 style="color: #6c757d; margin-bottom: 0.5rem"><slot></slot></h5>'
 })
 new Vue({
   el: '#app',
