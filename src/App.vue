@@ -80,7 +80,7 @@ export default {
 
 <style>
 #app {
-  font-family: 'Lato', Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Fakt Pro', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -114,7 +114,7 @@ export default {
 }
 .main-nav-pills .nav-item a.active {
   color: #007dff;
-  border-bottom: 5px solid #007dff;
+  border-bottom: 3px solid #007dff;
 }
 .main-nav-pills .nav-item a:focus {
   outline: none !important;
@@ -129,5 +129,8 @@ export default {
 
 <style lang="sass">
   @import '../node_modules/bootstrap/scss/bootstrap.scss';
+  @import './assets/fonts/FaktPro-Medium.ttf';
+  @import './assets/fonts/FaktPro-SemiBold.ttf';
+  @import './assets/fonts/FaktPro-Normal.ttf';
   @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 </style>
