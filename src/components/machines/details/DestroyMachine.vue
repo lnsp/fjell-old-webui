@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <h4>Destroy</h4>
     <hr>
     <p>

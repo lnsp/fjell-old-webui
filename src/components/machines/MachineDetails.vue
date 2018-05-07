@@ -15,7 +15,7 @@
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'PowerControl', params: { id: $route.params.id } }">Power</router-link></li>
           <li class="nav-item"><a class="nav-link" href="#">Volumes</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Resize</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Networking</a></li>
+          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'AddressManagement', params: { id: $route.params.id } }">Networking</router-link></li>
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'Snapshots', params: { id: $route.params.id } }">Snapshots</router-link></li>
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'DestroyMachine', params: { id: $route.params.id } }">Destroy</router-link></li>
         </ul>

@@ -13,6 +13,7 @@ import AccessConsole from '@/components/machines/details/AccessConsole'
 import PowerControl from '@/components/machines/details/PowerControl'
 import DestroyMachine from '@/components/machines/details/DestroyMachine'
 import Snapshots from '@/components/machines/details/Snapshots'
+import AddressManagement from '@/components/machines/details/AddressManagement'
 
 Vue.use(Router)
 
@@ -61,6 +62,11 @@ export default new Router({
           path: '/machines/:id/snapshots',
           name: 'Snapshots',
           component: Snapshots
+        },
+        {
+          path: '/machines/:id/networking',
+          name: 'AddressManagement',
+          component: AddressManagement
         }
       ]
     },
