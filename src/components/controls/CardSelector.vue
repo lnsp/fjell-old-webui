@@ -1,6 +1,6 @@
 <template>
   <div class="row align-content-stretch flex-wrap pl-2 pr-2">
-    <div v-for="item in items" :key="item.ID" :class="sizeOf(size) + ' p-1 mb-2'">
+    <div v-for="item in items" :key="item.id" :class="sizeOf(size) + ' p-1 mb-2'">
       <div class="selection-card card" @click="trigger(item)" :class="{ 'active': has(item), 'bg-primary': has(item), 'text-white': has(item) }">
         <slot :item="item" :has="has">
           <div class="card-header text-center">{{ item }}</div>
@@ -29,9 +29,9 @@ export default {
     has (item) {
       if (this.selected === null) return false
       if (this.mode === 'toggle') {
-        return this.selected.filter(e => e.ID === item.ID).length > 0
+        return this.selected.filter(e => e.id === item.id).length > 0
       } else {
-        return this.selected.ID === item.ID
+        return this.selected.id === item.id
       }
     },
     trigger (item) {
@@ -40,7 +40,7 @@ export default {
           this.selected = []
         }
         if (this.has(item)) {
-          this.selected = this.selected.filter(e => e.ID !== item.ID)
+          this.selected = this.selected.filter(e => e.id !== item.id)
         } else {
           this.selected.push(item)
         }

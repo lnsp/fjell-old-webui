@@ -34,13 +34,13 @@ export default {
   },
   methods: {
     updateSSHKeys () {
-      API.getMachineByName((err, machine) => {
+      API.getMachineKeysByID((err, keys) => {
         if (err) {
           console.log(err)
         } else {
-          this.sshKeys = machine.keys
+          this.sshKeys = keys
         }
-      }, this.$route.params.vmName)
+      }, this.$route.params.id)
     },
     updateVNCURL () {
       API.getMachineAccessVNCUrl((err, url) => {
@@ -49,7 +49,7 @@ export default {
         } else {
           this.vncURL = url
         }
-      }, this.$route.params.vmName)
+      }, this.$route.params.id)
     }
   }
 }

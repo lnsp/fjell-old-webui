@@ -12,13 +12,13 @@
       </div>
       <div class="dashboard-body">
         <transition-group name="progress-action">
-        <div class="dashboard-row row align-items-center justify-content-between" v-for="vm in machines" :key="vm.ipAddress">
+        <div class="dashboard-row row align-items-center justify-content-between" v-for="vm in machines" :key="vm.address">
           <div class="dashboard-cell col-12 col-md-5">
-            <div class="dashboard-machine-info row align-items-center" @click="() => { if (vm.deployProgress === 100) $router.push({ name: 'UsageGraphs', params: { vmName: vm.name }}) }">
+            <div class="dashboard-machine-info row align-items-center" @click="() => { if (vm.deployProgress === 100) $router.push({ name: 'UsageGraphs', params: { id: vm.id }}) }">
               <div class="col-auto">
                 <transition name="deploy-action" mode="out-in">
-                  <img key="logo-offline" v-if="vm.offline" :src="require('../assets/distros/' + vm.systemSlug + '_offline.svg')" class="dashboard-distro-logo">
-                  <img key="logo-online" v-else :src="require('../assets/distros/' + vm.systemSlug + '.svg')" class="dashboard-distro-logo">
+                  <img key="logo-offline" v-if="vm.offline" :src="require('../assets/distros/' + vm.osSlug + '_offline.svg')" class="dashboard-distro-logo">
+                  <img key="logo-online" v-else :src="require('../assets/distros/' + vm.osSlug + '.svg')" class="dashboard-distro-logo">
                 </transition>
               </div>
               <div class="col-auto">
@@ -27,7 +27,7 @@
                 </div>
                 <div class="row">
                   <span class="text-muted">
-                    <small>{{ vm.memory }} GB RAM / {{ vm.storage }} GB Disk / {{ vm.systemName }}</small>
+                    <small>{{ vm.memory }} GB RAM / {{ vm.storage }} GB Disk / {{ vm.osName }}</small>
                   </span>
                 </div>
               </div>
@@ -39,7 +39,7 @@
               <div class="d-none d-sm-flex offset-1 offset-md-0 col-sm-auto col-md-4">
                 <div class="copy-action-container">
                   <span class="text-muted d-inline d-md-none">IP </span>
-                <span class="copy-action-ip" v-clipboard:copy="vm.ipAddress" v-on:click="toggleCopyIP(vm)">{{ vm.ipAddress }}</span>
+                <span class="copy-action-ip" v-clipboard:copy="vm.address" v-on:click="toggleCopyIP(vm)">{{ vm.address }}</span>
                   <transition name="copy-action">
                     <span class="copy-action-label" v-if="showCopyFor === vm">Copied!</span>
                   </transition>
@@ -57,10 +57,10 @@
                     More
                   </button>
                   <div class="dropdown-menu">
-                    <router-link :to="{ name: 'AddDomain', params: { ipAddress: vm.ipAddress }}" class="dropdown-item">Add a domain</router-link>
-                    <router-link :to="{ name: 'AccessConsole', params: { vmName: vm.name }}" class="dropdown-item">Access console</router-link>
+                    <router-link :to="{ name: 'AddDomain', params: { address: vm.address }}" class="dropdown-item">Add a domain</router-link>
+                    <router-link :to="{ name: 'AccessConsole', params: { id: vm.id }}" class="dropdown-item">Access console</router-link>
                     <div class="dropdown-divider"></div>
-                    <router-link :to="{ name: 'DestroyMachine', params: { vmName: vm.name }}" class="dropdown-item destroy-dropdown">Destroy</router-link>
+                    <router-link :to="{ name: 'DestroyMachine', params: { id: vm.id }}" class="dropdown-item destroy-dropdown">Destroy</router-link>
                   </div>
                 </div>
               </div>
@@ -121,12 +121,9 @@ export default {
       })
     },
     toggleCopyIP (vm) {
-      console.log('Show "Copied" for', vm.ipAddress)
-      console.log('show')
+      console.log('Copying')
       this.showCopyFor = vm
-      console.log('showCopyFor')
       setTimeout(() => {
-        console.log('Hide "Copied" for', vm.ipAddress)
         this.showCopyFor = null
       }, copyActionInterval)
     }

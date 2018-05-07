@@ -54,7 +54,7 @@ export default {
         } else {
           this.fetchSnapshots()
         }
-      }, this.$route.params.vmName)
+      }, this.$route.params.id)
     },
     restoreFromSnapshot (snap) {
       API.toggleSnapshotRestore((err) => {
@@ -64,7 +64,7 @@ export default {
           // TODO: Show confirmation
           alert('Successfully restored from snapshot!')
         }
-      }, this.$route.params.vmName, snap.ID)
+      }, this.$route.params.id, snap.id)
     },
     deleteSnapshot (snap) {
       API.toggleSnapshotDelete((err) => {
@@ -73,16 +73,16 @@ export default {
         } else {
           this.fetchSnapshots()
         }
-      }, this.$route.params.vmName, snap.ID)
+      }, this.$route.params.id, snap.id)
     },
     fetchSnapshots () {
-      API.getMachineByName((err, machine) => {
+      API.getMachineByID((err, machine) => {
         if (err) {
           console.log(err)
         } else {
           this.snapshots = machine.snapshots.sort((a, b) => b.createdAt - a.createdAt)
         }
-      }, this.$route.params.vmName)
+      }, this.$route.params.id)
     }
   }
 }

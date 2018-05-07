@@ -43,15 +43,15 @@
       </transition>
     </div>
     <div class="mb-3">
-      <site-subheader>Add block storage</site-subheader>
+      <site-subheader>Add block volumes</site-subheader>
       <hr />
       <transition name="fade" mode="out-in">
-        <p key="if" v-if="blocks === null" class="text-center"><icon name="circle-o-notch" spin></icon></p>
-        <p key="elseif" v-else-if="blocks.length === 0" class="text-center lead">
-          No block storage available.
+        <p key="if" v-if="volumes === null" class="text-center"><icon name="circle-o-notch" spin></icon></p>
+        <p key="elseif" v-else-if="volumes.length === 0" class="text-center lead">
+          No block volumes available.
         </p>
         <div v-else>
-          <card-selector :items="blocks" mode="toggle" size="small" @input="blocks => { selected.blocks = blocks; updateInstanceAllowance() }">
+          <card-selector :items="volumes" mode="toggle" size="small" @input="blocks => { selected.volumes = volumes; updateInstanceAllowance() }">
             <div slot-scope="props">
               <div class="card-header text-center">
                 {{ props.item.name }}
@@ -126,7 +126,7 @@ export default {
     return {
       sizes: null,
       systems: null,
-      blocks: null,
+      volumes: null,
       keys: null,
       selected: {
         size: null,
@@ -160,15 +160,17 @@ export default {
       this.wrapAPICall(API.getConfigurationOptionSize, sizes => {
         this.sizes = sizes
       }, [])
-      this.wrapAPICall(API.getDeployedBlockStorage, blocks => {
-        this.blocks = blocks
+      this.wrapAPICall(API.getDeployedVolumes, volumes => {
+        this.volumes = volumes
       }, [])
       this.wrapAPICall(API.getDeployedSSHKeys, keys => {
         this.keys = keys
       }, [])
     },
     deployMachine () {
-      API.deployMachine(this.selected.system.ID, this.selected.system.version, this.selected.size.ID, this.selected.storage, this.selected.keys, this.instanceNames, (err) => {
+      let volumes = this.selected.volumes.map(v => v.id)
+      let keys = this.selected.keys.map(k => k.id)
+      API.deployMachine(this.selected.system.id, this.selected.system.version, this.selected.size.id, volumes, keys, this.instanceNames, (err) => {
         if (err) {
           console.log('Failed to create VM:', err)
         } else {

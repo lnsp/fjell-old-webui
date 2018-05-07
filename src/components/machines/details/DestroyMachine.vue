@@ -31,7 +31,7 @@ export default {
         } else {
           this.$router.push({ name: 'Dashboard' })
         }
-      }, this.$route.params.vmName)
+      }, this.$route.params.id)
     }
   }
 }

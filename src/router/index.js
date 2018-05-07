@@ -29,36 +29,36 @@ export default new Router({
       component: Settings
     },
     {
-      path: '/machine/new',
+      path: '/machines/new',
       name: 'AddMachine',
       component: AddMachine
     },
     {
-      path: '/machine/:vmName',
+      path: '/machines/:id',
       component: MachineDetails,
       children: [
         {
-          path: '/machine/:vmName/',
+          path: '/machines/:id/',
           name: 'UsageGraphs',
           component: UsageGraphs
         },
         {
-          path: '/machine/:vmName/console',
+          path: '/machines/:id/console',
           name: 'AccessConsole',
           component: AccessConsole
         },
         {
-          path: '/machine/:vmName/destroy',
+          path: '/machines/:id/destroy',
           name: 'DestroyMachine',
           component: DestroyMachine
         },
         {
-          path: '/machine/:vmName/power',
+          path: '/machines/:id/power',
           name: 'PowerControl',
           component: PowerControl
         },
         {
-          path: '/machine/:vmName/snapshots',
+          path: '/machines/:id/snapshots',
           name: 'Snapshots',
           component: Snapshots
         }
@@ -85,7 +85,7 @@ export default new Router({
       component: Networking
     },
     {
-      path: '/network/domain/new/:ipAddress',
+      path: '/network/domain/new/:address',
       name: 'AddDomain',
       component: AddDomain
     },

@@ -1,4 +1,4 @@
-# ![logo](https://user-images.githubusercontent.com/3391295/35761975-a6310e0c-088f-11e8-82f9-30d48803552e.png) Paddle
+# ![logo](https://user-images.githubusercontent.com/3391295/35761975-a6310e0c-088f-11e8-82f9-30d48803552e.png) 王八蛋 Cloud
 
 > Open platform for virtualized computing, storage management and networking.
 

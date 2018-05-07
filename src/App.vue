@@ -5,8 +5,7 @@
         <div class="row w-100 m-0 align-items-center justify-content-between">
           <div class="col-auto pl-0 order-1">
             <router-link :to="{ name: 'Dashboard' }" class="main-nav-brand">
-              <!--<img :src="require('./assets/logo.svg')" style="width: 2em">!-->
-              <strong>Paddle</strong>
+              <strong>王八蛋 Cloud</strong>
             </router-link>
           </div>
           <div class="col-sm-12 col-md-auto pl-0 order-md-2 order-3">
@@ -38,7 +37,7 @@
                   </router-link>
                   <!--
                   <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'Storage' }">
-                    Block Storage
+                    Block storage
                     <div class="small text-muted">Add storage to machines</div>
                   </router-link>
                   <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'Storage' }">

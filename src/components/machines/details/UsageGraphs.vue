@@ -23,7 +23,7 @@ export default {
         } else {
           this.cpuUsage = this.buildDataset(resp.labels, resp.data)
         }
-      }, this.$route.params.vmName)
+      }, this.$route.params.id)
     },
     buildDataset (labels, stats) {
       return {

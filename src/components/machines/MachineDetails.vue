@@ -1,21 +1,23 @@
 <template>
   <div class="mt-4">
-    <h3 class="machine-header"><span class="text-muted">Machine</span> <span class="machine-name">{{ $route.params.vmName }}</span></h3>
-    <div v-if="systemSpecs" class="text-muted machine-specs">
-      {{ systemSpecs.memory }} MB RAM / {{ systemSpecs.storage }} GB Disk / {{ systemSpecs.systemName }}
+    <div v-if="vm">
+      <h3 class="machine-header"><span class="text-muted">Machine</span> <span class="machine-name">{{ vm.name }}</span></h3>
+      <div class="text-muted machine-specs">
+        {{ vm.memory }} MB RAM / {{ vm.storage }} GB Disk / {{ vm.osName }}
+      </div>
     </div>
     <hr class="mb-4">
     <div class="row">
       <div class="col-sm-2 action-selector">
         <ul class="nav flex-row flex-sm-column" :class="{ 'nav-tabs mb-3': windowWidth < 600 }" >
-          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'UsageGraphs', params: { vmName: $route.params.vmName } }">Graphs</router-link></li>
-          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'AccessConsole', params: { vmName: $route.params.vmName } }">Console</router-link></li>
-          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'PowerControl', params: { vmName: $route.params.vmName } }">Power</router-link></li>
+          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'UsageGraphs', params: { id: $route.params.id } }">Graphs</router-link></li>
+          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'AccessConsole', params: { id: $route.params.id } }">Console</router-link></li>
+          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'PowerControl', params: { id: $route.params.id } }">Power</router-link></li>
           <li class="nav-item"><a class="nav-link" href="#">Volumes</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Resize</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Networking</a></li>
-          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'Snapshots', params: { vmName: $route.params.vmName } }">Snapshots</router-link></li>
-          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'DestroyMachine', params: { vmName: $route.params.vmName } }">Destroy</router-link></li>
+          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'Snapshots', params: { id: $route.params.id } }">Snapshots</router-link></li>
+          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'DestroyMachine', params: { id: $route.params.id } }">Destroy</router-link></li>
         </ul>
       </div>
       <div class="col-sm-10">
@@ -32,19 +34,19 @@ export default {
   name: 'MachineDetails',
   data () {
     return {
-      systemSpecs: null,
+      vm: null,
       windowWidth: 0
     }
   },
   created () {
     this.windowWidth = window.innerWidth
-    API.getMachineByName((err, specs) => {
+    API.getMachineByID((err, specs) => {
       if (err) {
         console.log(err)
       } else {
-        this.systemSpecs = specs
+        this.vm = specs
       }
-    }, this.$route.params.vmName)
+    }, this.$route.params.id)
   },
   mounted () {
     let that = this
@@ -52,11 +54,10 @@ export default {
       window.addEventListener('resize', e => { that.windowWidth = window.innerWidth })
     })
   }
-
 }
 </script>
 
-<style>
+<style scoped>
 .machine-name {
   color: #007bff;
 }

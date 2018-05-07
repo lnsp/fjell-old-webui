@@ -48,14 +48,14 @@ export default {
   },
   methods: {
     updateState () {
-      API.getMachineByName((err, machine) => {
+      API.getMachineByID((err, machine) => {
         if (err) {
           console.log(err)
         } else {
           this.validState = true
           this.isOffline = machine.offline
         }
-      }, this.$route.params.vmName)
+      }, this.$route.params.id)
     },
     toggleReboot () {
       this.rebootActive = true
@@ -66,7 +66,7 @@ export default {
         } else {
           this.updateState()
         }
-      }, this.$route.params.vmName)
+      }, this.$route.params.id)
     },
     togglePower () {
       this.powerToggleActive = true
@@ -77,7 +77,7 @@ export default {
         } else {
           this.updateState()
         }
-      }, this.$route.params.vmName)
+      }, this.$route.params.id)
     }
   }
 }
