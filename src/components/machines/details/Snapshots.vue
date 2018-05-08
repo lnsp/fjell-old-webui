@@ -19,7 +19,8 @@
         <div class="snapshot-cell col-4">Size</div>
         <div class="snapshot-cell col-4"></div>
       </div>
-      <div class="snapshot-row row" v-for="snap in snapshots" :key="snap.ID">
+      <transition-group name="snapshot-list">
+      <div class="snapshot-row row" v-for="snap in snapshots" :key="snap.id">
         <div class="snapshot-cell col-4"> {{ snap.createdAt | moment("calendar") }}</div>
         <div class="snapshot-cell col-4"> {{ snap.size }} MB </div>
         <div class="snapshot-cell col-4">
@@ -27,6 +28,7 @@
           <a @click="deleteSnapshot(snap)" class="btn btn-link text-danger">Delete</a>
         </div>
       </div>
+      </transition-group>
     </div>
   </div>
 </template>
@@ -99,5 +101,16 @@ export default {
   padding: 0.5rem;
   align-items: center;
   position: relative;
+}
+.snapshot-list-enter-active, .snapshot-list-leave-active {
+  transition: all .3s ease;
+}
+.snapshot-list-leave-to {
+  opacity: 0;
+  transform: translateX(50px);
+}
+.snapshot-list-enter {
+  opacity: 0;
+  transform: translateX(-50px);
 }
 </style>
