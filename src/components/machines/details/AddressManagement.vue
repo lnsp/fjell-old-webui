@@ -2,26 +2,20 @@
   <div>
     <site-subheader>Networking</site-subheader>
     <hr />
-    <div class="row">
+    <div class="row" v-if="network">
       <div class="col-sm-4">
         <h5 class="network-label">IP Address</h5>
-        <p v-if="vm">{{ vm.address }}</p>
+        <p>{{ network.ipv4.public.address }}</p>
       </div>
       <div class="col-sm-4">
         <h5 class="network-label">Gateway</h5>
-        <p v-if="vm">225.67.4.1</p>
+        <p>{{ network.ipv4.public.gateway }}</p>
       </div>
       <div class="col-sm-4">
         <h5 class="network-label">Netmask</h5>
-        <p v-if="vm">255.255.240.0</p>
+        <p>{{ network.ipv4.public.netmask }}</p>
       </div>
     </div>
-    <!--Net
-    <site-subsubheader>Public IPv6 Network</site-subsubheader>
-    <p class="text-muted">Disabled.</p>
-    <site-subsubheader>Private Network</site-subsubheader>
-    <p class="text-muted">Disabled.</p>
-    !-->
   </div>
 </template>
 
@@ -40,7 +34,7 @@ export default {
   name: 'AddressManagement',
   data () {
     return {
-      vm: null
+      network: null,
     }
   },
   created () {
@@ -48,11 +42,12 @@ export default {
   },
   methods: {
     fetch () {
-      API.getMachineByID((err, machine) => {
+      API.getMachineNetwork((err, network) => {
         if (err != null) {
           console.log(err)
         } else {
-          this.vm = machine
+          this.network = network
+          console.log(network)
         }
       }, this.$route.params.id)
     }
