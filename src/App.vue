@@ -25,19 +25,21 @@
             <div class="my-2 my-lg-0 main-nav-dropdown">
               <div class="btn-group add-service-dropdown">
                 <button class="btn btn-success dropdown-toggle d-flex align-items-center" type="button" id="addDropdownToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <icon name="plus"></icon>
+                  <!--<icon name="plus"></icon>!-->
                   <strong>
-                    <span class="ml-2">Add</span>
+                    <span class="ml-2">Create</span>
                   </strong>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right add-instance-menu" aria-labelledby="addDropdownToggle">
+                  <div class="dropdown-header">Compute</div>
                   <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'AddMachine' }">
                     Virtual Machine
-                    <div class="small text-muted">Create virtual servers</div>
+                    <div class="small text-muted">Spawn virtual servers</div>
                   </router-link>
-                  <!--
+                  <div class="dropdown-divider"></div>
+                  <div class="dropdown-header">Storage</div>
                   <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'Storage' }">
-                    Block storage
+                    Block volumes
                     <div class="small text-muted">Add storage to machines</div>
                   </router-link>
                   <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'Storage' }">
@@ -45,19 +47,19 @@
                     <div class="small text-muted">Store and server static assets</div>
                   </router-link>
                   <div class="dropdown-divider"></div>
-                  <router-link exact-active-class="" class="dropdown-item" disabled :to="{ name: 'AddFloatingIP' }">
+                  <div class="dropdown-header">Network</div>
+                  <router-link exact-active-class="" class="dropdown-item" disabled :to="{ name: 'Networking' }">
                     Floating IP
                     <div class="small text-muted">Reserve IP addresses for servers</div>
                   </router-link>
-                  <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'AddFirewall' }">
+                  <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'Networking' }">
                     Firewall
                     <div class="small text-muted">Increase server security</div>
                   </router-link>
-                  <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'AddLoadBalancer' }">
+                  <router-link exact-active-class="" class="dropdown-item" :to="{ name: 'Networking' }">
                     Load Balancer
                     <div class="small text-muted">Distribute traffic to servers</div>
                   </router-link>
-                  !-->
                 </div>
               </div>
             </div>
@@ -104,6 +106,17 @@ export default {
 }
 .main-nav-brand:hover {
   text-decoration: none;
+}
+.dropdown-header {
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  clear: both;
+  font-weight: 600;
+  padding: 0.25rem 0.7rem;
+  background-color: transparent;
+  border: 0;
+  width: 100%;
 }
 
 .main-nav-pills .nav-item a {
