@@ -94,7 +94,7 @@
           <count-selector class="input-group-fixed mt-4"
             :value="instanceCount" @input="count => setInstanceCount(count)" :min="minInstances" :max="maxInstances" />
         </div>
-        <div class="col">
+        <div class="col mt-4 m-sm-0">
           <h5>Choose your hostnames whisely!</h5>
           <transition-group name="fade">
             <div v-for="(name, index) in instanceNames" :key="index" class="row">
