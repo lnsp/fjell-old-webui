@@ -5,7 +5,7 @@
         <div class="row w-100 m-0 align-items-center justify-content-between">
           <div class="col-auto pl-0 order-1">
             <router-link :to="{ name: 'Dashboard' }" class="main-nav-brand">
-              <strong>王八蛋 Cloud</strong>
+              <strong>Bastoud</strong>
             </router-link>
           </div>
           <div class="col-sm-12 col-md-auto pl-0 order-md-2 order-3">
@@ -124,12 +124,45 @@ export default {
 }
 .add-instance-menu .dropdown-item:focus {
 }
+
+@font-face {
+  font-family: 'Fakt Pro';
+  font-weight: 100;
+  src: url('./assets/fonts/FaktPro-Hair.ttf');
+}
+@font-face {
+  font-family: 'Fakt Pro';
+  font-weight: 200;
+  src: url('./assets/fonts/FaktPro-Thin.ttf');
+}
+@font-face {
+  font-family: 'Fakt Pro';
+  font-weight: 300;
+  src: url('./assets/fonts/FaktPro-Light.ttf');
+}
+@font-face {
+  font-family: 'Fakt Pro';
+  font-weight: 400;
+  src: url('./assets/fonts/FaktPro-Blond.ttf');
+}
+@font-face {
+  font-family: 'Fakt Pro';
+  font-weight: 500;
+  src: url('./assets/fonts/FaktPro-Normal.ttf');
+}
+@font-face {
+  font-family: 'Fakt Pro';
+  font-weight: 600;
+  src: url('./assets/fonts/FaktPro-Medium.ttf');
+}
+@font-face {
+  font-family: 'Fakt Pro';
+  font-weight: 700;
+  src: url('./assets/fonts/FaktPro-SemiBold.ttf');
+}
 </style>
 
 <style lang="sass">
   @import '../node_modules/bootstrap/scss/bootstrap.scss';
-  @import './assets/fonts/FaktPro-Medium.ttf';
-  @import './assets/fonts/FaktPro-SemiBold.ttf';
-  @import './assets/fonts/FaktPro-Normal.ttf';
-  @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
+  @import url('https://fonts.googleapis.com/css?family=Nunito:300,400,700');
 </style>

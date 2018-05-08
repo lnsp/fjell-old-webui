@@ -5,15 +5,6 @@ let machineTiers = [
   { cpus: 1, memory: 2048, storage: 50, id: 'b8670386-6e18-48c0-a62d-d1cc19e076d5' },
   { cpus: 2, memory: 4096, storage: 80, id: 'ce193d7f-e64b-4c94-a2a2-ff838fa1dc51' },
   { cpus: 4, memory: 8192, storage: 160, id: '4660e24e-2aab-4bcc-8da0-8cfb4ef8ae9d' }
-  /*
-  { cpus: 6, memory: 16, storage: 320 },
-  { cpus: 8, memory: 32, storage: 640 },
-  { cpus: 12, memory: 48, storage: 960 },
-  { cpus: 16, memory: 64, storage: 1280 },
-  { cpus: 20, memory: 96, storage: 1920 },
-  { cpus: 24, memory: 128, storage: 2560 },
-  { cpus: 32, memory: 92, storage: 3840 }
-  */
 ]
 
 let machineSystems = [
