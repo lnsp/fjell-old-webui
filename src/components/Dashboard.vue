@@ -1,6 +1,5 @@
 <template>
   <div>
-    <site-header>Dashboard</site-header>
     <div v-if="machines" class="dashboard-table mb-3">
       <div class="dashboard-header row d-none d-md-flex">
         <div class="dashboard-cell col-3 col-sm-5">Name</div>
