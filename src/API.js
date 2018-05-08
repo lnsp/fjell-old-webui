@@ -91,7 +91,7 @@ var fakeSnapshots = [
 ]
 
 let defaultLatencyVariance = 0
-let defaultLatencyMin = 750
+let defaultLatencyMin = 0
 
 function delay (callback) {
   setTimeout(callback, defaultLatencyVariance * Math.random() + defaultLatencyMin)
@@ -205,6 +205,20 @@ export default {
   },
   getMachineAccessVNCUrl (callback, id) {
     delay(() => callback(null, 'javascript:alert("getMachineVNCSession")'))
+  },
+  getMachineNetwork (callback, id) {
+    let machine = fakeMachines.filter(m => m.id === id)[0]
+    delay(() => callback(null, {
+      'ipv4': {
+        'public': {
+          'address': machine.address,
+          'netmask': '255.255.240.0',
+          'gateway': machine.address.replace(/\.[0-9]+$/g, '.1')
+        },
+        'private': null
+      },
+      'ipv6': null
+    }))
   },
   getMachineKeysByID (callback, id) {
     let machine = fakeMachines.filter(m => m.id === id)[0]
