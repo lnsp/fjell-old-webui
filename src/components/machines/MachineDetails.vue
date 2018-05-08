@@ -1,14 +1,19 @@
 <template>
   <div class="mt-4">
-    <div v-if="vm">
-      <h3 class="machine-header"><span class="text-muted">Machine</span> <span class="machine-name">{{ vm.name }}</span></h3>
-      <div class="text-muted machine-specs">
-        {{ vm.memory }} MB RAM / {{ vm.storage }} GB Disk / {{ vm.osName }}
+    <div v-if="vm" class="row align-items-center">
+      <div class="col-auto d-sm-flex d-none">
+        <img :src="require('../../assets/distros/' + vm.osSlug + '.svg')" width="60px">
+      </div>
+      <div class="col-auto">
+        <h3 class="machine-header"><span class="text-muted d-sm-inline d-none">Machine</span> <span class="machine-name">{{ vm.name }}</span></h3>
+        <div class="text-muted machine-specs">
+          {{ vm.memory }} MB RAM / {{ vm.storage }} GB Disk / {{ vm.osName }}
+        </div>
       </div>
     </div>
     <hr class="mb-4">
     <div class="row">
-      <div class="col-sm-2 action-selector">
+      <div class="col-sm-3 col-md-2 action-selector">
         <ul class="nav flex-row flex-sm-column" :class="{ 'nav-tabs mb-3': windowWidth < 600 }" >
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'UsageGraphs', params: { id: $route.params.id } }">Graphs</router-link></li>
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'AccessConsole', params: { id: $route.params.id } }">Console</router-link></li>
@@ -20,7 +25,7 @@
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'DestroyMachine', params: { id: $route.params.id } }">Destroy</router-link></li>
         </ul>
       </div>
-      <div class="col-sm-10">
+      <div class="col-sm-9 col-md-10">
         <router-view></router-view>
       </div>
     </div>
