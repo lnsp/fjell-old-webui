@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Dashboard from '@/components/Dashboard'
 import Settings from '@/components/Settings'
+import Machines from '@/components/machines/machines'
 import AddMachine from '@/components/machines/AddMachine'
 import StorageDashboard from '@/components/storage/Dashboard'
 import Networking from '@/components/networking/Networking'
@@ -14,15 +14,16 @@ import PowerControl from '@/components/machines/details/PowerControl'
 import DestroyMachine from '@/components/machines/details/DestroyMachine'
 import Snapshots from '@/components/machines/details/Snapshots'
 import AddressManagement from '@/components/machines/details/AddressManagement'
+import ResizeMachine from '@/components/machines/details/ResizeMachine'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'Dashboard',
-      component: Dashboard
+      path: '/machines',
+      name: 'Machines',
+      component: Machines
     },
     {
       path: '/settings',
@@ -67,6 +68,11 @@ export default new Router({
           path: '/machines/:id/networking',
           name: 'AddressManagement',
           component: AddressManagement
+        },
+        {
+          path: '/machines/:id/resize',
+          name: 'ResizeMachine',
+          component: ResizeMachine
         }
       ]
     },

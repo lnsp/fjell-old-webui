@@ -1,7 +1,7 @@
 <template>
   <div class="row align-content-stretch flex-wrap pl-2 pr-2">
     <div v-for="item in items" :key="item.id" :class="sizeOf(size) + ' p-1 mb-2'">
-      <div class="selection-card card" @click="trigger(item)" :class="{ 'active': has(item), 'bg-primary': has(item), 'text-white': has(item) }">
+      <div class="selection-card card" @click="trigger(item)" :class="{ 'active': has(item), ['bg-' + highlightColor]: has(item), 'text-white': has(item) }">
         <slot :item="item" :has="has">
           <div class="card-header text-center">{{ item }}</div>
         </slot>
@@ -13,7 +13,15 @@
 <script>
 export default {
   name: 'CardSelector',
-  props: ['items', 'mode', 'size'],
+  props: {
+    items: Array,
+    mode: String,
+    size: String,
+    highlightColor: {
+      type: String,
+      default: 'primary'
+    }
+  },
   data () {
     return {
       selected: null

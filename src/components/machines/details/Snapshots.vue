@@ -7,7 +7,7 @@
       By using snapshots, you can easily restore your virtual machine into a previous safe-state.
       To create a snapshot, the machine has to be turned off.
     </p>
-    <button @click="buildSnapshot()" class="btn btn-outline-primary">
+    <button @click="buildSnapshot()" class="btn btn-outline-secondary">
       <icon name="circle-o-notch" spin class="mr-2" :class="{ 'd-none': !buildActive }" />
       Build snapshot
     </button>

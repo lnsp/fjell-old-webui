@@ -6,7 +6,7 @@
     <p>
       If the host machine supports it, you can access your machine via <code>noVNC</code>.
     </p>
-    <a :href="vncURL" class="btn btn-outline-primary" :class="{ 'disabled': !vncURL }" target="_blank">Access via VNC</a>
+    <a :href="vncURL" class="btn btn-outline-secondary" :class="{ 'disabled': !vncURL }" target="_blank">Access via VNC</a>
     <hr />
     <site-subsubheader>Access via SSH</site-subsubheader>
     <p>

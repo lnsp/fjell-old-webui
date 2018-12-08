@@ -11,7 +11,7 @@
       <p v-else>
         This will power off your machine. We recommend powering off through the command line, as this action is the same as hard resetting the server and may cause data corruption.
       </p>
-      <button class="btn btn-outline-warning d-flex align-items-center" @click="togglePower()">
+      <button class="btn btn-outline-secondary d-flex align-items-center" @click="togglePower()">
         <icon name="circle-o-notch" spin class="mr-2" :class="{ 'd-none': !powerToggleActive }" />
         Power<span v-if="isOffline">on</span><span v-else>off</span>
       </button>
@@ -22,7 +22,7 @@
         <p>
           This will power of your machine, reset it and power it back on. We recommend rebooting through the command line, as this action is the same as hard resetting the server and may cause data corruption.
         </p>
-        <button class="btn btn-outline-warning d-flex align-items-center" @click="toggleReboot">
+        <button class="btn btn-outline-secondary d-flex align-items-center" @click="toggleReboot">
           <icon name="circle-o-notch" spin class="mr-2" :class="{ 'd-none': !rebootActive }" />
           Reboot
         </button>

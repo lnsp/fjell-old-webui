@@ -29,7 +29,7 @@ export default {
         if (err) {
           console.log(err)
         } else {
-          this.$router.push({ name: 'Dashboard' })
+          this.$router.push({ name: 'Machines' })
         }
       }, this.$route.params.id)
     }

@@ -2,7 +2,7 @@
   <div class="mt-4">
     <div v-if="vm" class="row align-items-center">
       <div class="col-auto d-sm-flex d-none">
-        <img :src="require('../../assets/distros/' + vm.osSlug + '.svg')" width="60px">
+        <img :src="require('../../assets/distros/' + vm.osSlug + '.svg')" width="60px" height="60px">
       </div>
       <div class="col-auto">
         <h3 class="machine-header"><span class="text-muted d-sm-inline d-none">Machine</span> <span class="machine-name">{{ vm.name }}</span></h3>
@@ -19,7 +19,7 @@
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'AccessConsole', params: { id: $route.params.id } }">Console</router-link></li>
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'PowerControl', params: { id: $route.params.id } }">Power</router-link></li>
           <li class="nav-item"><a class="nav-link" href="#">Volumes</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Resize</a></li>
+          <li class="nav-item"><router-link class="nav-link" :to="{ name: 'ResizeMachine', params: { id: $route.params.id } }">Resize</router-link></li>
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'AddressManagement', params: { id: $route.params.id } }">Networking</router-link></li>
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'Snapshots', params: { id: $route.params.id } }">Snapshots</router-link></li>
           <li class="nav-item"><router-link class="nav-link" :to="{ name: 'DestroyMachine', params: { id: $route.params.id } }">Destroy</router-link></li>
@@ -68,6 +68,9 @@ export default {
 }
 .action-selector .nav-link {
   color: #999999;
+  border-radius: 15px;
+  border: 1px solid rgba(0,0,0,0);
+  transition: border ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 .action-selector .nav-link:focus {
   outline: none !important;
@@ -77,6 +80,8 @@ export default {
 }
 .action-selector .nav-link.active {
   color: #007bff;
+  border: 1px solid #007bff;
+  box-shadow: 0px 4px 15px #ddd;
 }
 @media (max-width: 600px) {
   .machine-header {

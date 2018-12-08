@@ -4,20 +4,20 @@
       <div class="container">
         <div class="row w-100 m-0 align-items-center justify-content-between">
           <div class="col-auto pl-0 order-1">
-            <router-link :to="{ name: 'Dashboard' }" class="main-nav-brand">
-              <strong>Bastoud</strong>
+            <router-link :to="{ name: 'Machines' }" class="main-nav-brand">
+              fjell
             </router-link>
           </div>
           <div class="col-sm-12 col-md-auto pl-0 order-md-2 order-3">
             <ul class="nav main-nav-pills">
               <li class="nav-item mr-3">
-                <router-link :to="{ name: 'Dashboard' }" class="nav-link">Dashboard</router-link>
+                <router-link :to="{ name: 'Machines' }" class="nav-link" active-class="nav-item-active">Machines</router-link>
               </li>
               <li class="nav-item mr-3">
-                <router-link :to="{ name: 'Storage' }" class="nav-link">Storage</router-link>
+                <router-link :to="{ name: 'Storage' }" class="nav-link" active-class="nav-item-active">Storage</router-link>
               </li>
               <li class="nav-item">
-                <router-link :to="{ name: 'Networking' }" class="nav-link">Networking</router-link>
+                <router-link :to="{ name: 'Networking' }" class="nav-link" active-class="nav-item-active">Networking</router-link>
               </li>
             </ul>
           </div>
@@ -25,7 +25,6 @@
             <div class="my-2 my-lg-0 main-nav-dropdown">
               <div class="btn-group add-service-dropdown">
                 <button class="btn btn-success dropdown-toggle d-flex align-items-center" type="button" id="addDropdownToggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <!--<icon name="plus"></icon>!-->
                   <strong>
                     <span class="ml-2">Create</span>
                   </strong>
@@ -81,7 +80,7 @@ export default {
 
 <style>
 #app {
-  font-family: 'Fakt Pro', Avenir, Helvetica, Arial, sans-serif;
+  font-family: Nunito, -apple-system, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -102,7 +101,8 @@ export default {
 }
 */
 .main-nav-brand {
-  font-size: 24px;
+  font-size: 28px;
+  font-family: 'Circular Std';
 }
 .main-nav-brand:hover {
   text-decoration: none;
@@ -119,15 +119,22 @@ export default {
   width: 100%;
 }
 
-.main-nav-pills .nav-item a {
+.main-nav-pills .nav-item a.active, .nav-item-active {
+  color: #007dff;
+  border-bottom: 3px solid #007dff;
+}
+
+.nav-item a:not(.nav-item-active) {
   color: #777777;
+}
+
+.main-nav-pills .nav-item a {
   font-weight: 500;
   padding-left: 0;
   padding-right: 0;
-}
-.main-nav-pills .nav-item a.active {
-  color: #007dff;
-  border-bottom: 3px solid #007dff;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: 600;
 }
 .main-nav-pills .nav-item a:focus {
   outline: none !important;
@@ -137,42 +144,6 @@ export default {
   color: #212529;
 }
 .add-instance-menu .dropdown-item:focus {
-}
-
-@font-face {
-  font-family: 'Fakt Pro';
-  font-weight: 100;
-  src: url('./assets/fonts/FaktPro-Hair.ttf');
-}
-@font-face {
-  font-family: 'Fakt Pro';
-  font-weight: 200;
-  src: url('./assets/fonts/FaktPro-Thin.ttf');
-}
-@font-face {
-  font-family: 'Fakt Pro';
-  font-weight: 300;
-  src: url('./assets/fonts/FaktPro-Light.ttf');
-}
-@font-face {
-  font-family: 'Fakt Pro';
-  font-weight: 400;
-  src: url('./assets/fonts/FaktPro-Blond.ttf');
-}
-@font-face {
-  font-family: 'Fakt Pro';
-  font-weight: 500;
-  src: url('./assets/fonts/FaktPro-Normal.ttf');
-}
-@font-face {
-  font-family: 'Fakt Pro';
-  font-weight: 600;
-  src: url('./assets/fonts/FaktPro-Medium.ttf');
-}
-@font-face {
-  font-family: 'Fakt Pro';
-  font-weight: 700;
-  src: url('./assets/fonts/FaktPro-SemiBold.ttf');
 }
 </style>
 

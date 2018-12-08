@@ -174,7 +174,7 @@ export default {
         if (err) {
           console.log('Failed to create VM:', err)
         } else {
-          this.$router.push({ name: 'Dashboard' })
+          this.$router.push({ name: 'Machines' })
         }
       })
     },

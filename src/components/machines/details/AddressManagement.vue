@@ -34,7 +34,7 @@ export default {
   name: 'AddressManagement',
   data () {
     return {
-      network: null,
+      network: null
     }
   },
   created () {

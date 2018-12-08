@@ -2,7 +2,7 @@
   <div class="input-group">
     {{ label }}
     <div class="input-group-prepend">
-      <button class="btn btn-lg btn-outline-primary"
+      <button class="btn btn-outline-primary"
         :class="{ 'btn-outline-secondary': !canDecrement() }"
         :disabled="!canDecrement()" @click="decrement()">
         −
@@ -10,7 +10,7 @@
     </div>
     <input type="text" readonly class="form-control text-center count-selector-value" :value="value" />
     <div class="input-group-append">
-      <button class="btn btn-lg btn-outline-primary"
+      <button class="btn btn-outline-primary"
         :class="{ 'btn-outline-secondary': !canIncrement() }"
         :disabled="!canIncrement()" @click="increment()">
         +
@@ -18,6 +18,12 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+input, button {
+  height: calc(2.25rem + 2px);
+}
+</style>
 
 <script>
 export default {

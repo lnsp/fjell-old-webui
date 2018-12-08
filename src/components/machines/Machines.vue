@@ -16,8 +16,8 @@
             <div class="dashboard-machine-info row align-items-center" @click="() => { if (vm.deployProgress === 100) $router.push({ name: 'UsageGraphs', params: { id: vm.id }}) }">
               <div class="col-auto">
                 <transition name="deploy-action" mode="out-in">
-                  <img key="logo-offline" v-if="vm.offline" :src="require('../assets/distros/' + vm.osSlug + '_offline.svg')" class="dashboard-distro-logo">
-                  <img key="logo-online" v-else :src="require('../assets/distros/' + vm.osSlug + '.svg')" class="dashboard-distro-logo">
+                  <img key="logo-offline" v-if="vm.offline" :src="require('@/assets/distros/' + vm.osSlug + '_offline.svg')" class="dashboard-distro-logo">
+                  <img key="logo-online" v-else :src="require('@/assets/distros/' + vm.osSlug + '.svg')" class="dashboard-distro-logo">
                 </transition>
               </div>
               <div class="col-auto">
@@ -83,10 +83,9 @@ import API from '@/API'
 let copyActionInterval = 1000
 
 export default {
-  name: 'Dashboard',
+  name: 'Machines',
   data () {
     return {
-      msg: 'Dashboard',
       loading: false,
       refreshTimer: null,
       machines: [],
@@ -158,17 +157,17 @@ export default {
 
 .copy-action-enter {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(0px);
 }
 .copy-action-enter-active {
   transition: opacity .25s ease-in-out, transform .25s ease-in-out;
 }
 .copy-action-enter-to {
-  transform: translateY(0px);
+  transform: translateY(-20px);
   opacity: 1;
 }
 .copy-action-leave {
-  transform: translateY(0px);
+  transform: translateY(-20px);
   opacity: 1;
 }
 .copy-action-leave-active {
@@ -176,7 +175,7 @@ export default {
 }
 .copy-action-leave-to {
   opacity: 0;
-  transform: translateY(-20px);
+  transform: translateY(-40px);
 }
 .copy-action-label {
   position: absolute;

@@ -170,7 +170,7 @@ export default {
       var offlineSwitch = false
       if (element.deployProgress < 100) {
         offlineSwitch = true
-        element.deployProgress = Math.min(element.deployProgress + Math.random() * 10 + 1, 100)
+        element.deployProgress = Math.min(element.deployProgress + 20 + Math.random() * 20 + 1, 100)
       }
       if (offlineSwitch) element.offline = element.deployProgress < 100
     })
@@ -232,11 +232,22 @@ export default {
     let machine = fakeMachines.filter(m => m.id === id)[0]
     delay(() => callback(null, machine.snapshots))
   },
+  toggleMachineResize (callback, id, tier) {
+    let vm = fakeMachines.find(vm => vm.id === id)
+    setTimeout(() => { vm.offline = true }, Math.random() * 750 + 250)
+    setTimeout(() => {
+      vm.storage = tier.storage
+      vm.memory = tier.memory
+      vm.cpus = tier.cpus
+    }, Math.random() * 2000 + 1500)
+    setTimeout(() => { vm.offline = false }, 4000 + Math.random() * 1500)
+    delay(() => callback(null))
+  },
   toggleMachineReboot (callback, id) {
     let vm = fakeMachines.find(vm => vm.id === id)
     setTimeout(() => { vm.offline = true }, Math.random() * 750 + 250)
     setTimeout(() => { vm.offline = false }, Math.random() * 5000 + 15000)
-    setTimeout(() => callback(null), Math.random() * 750 + 250)
+    delay(() => callback(null))
   },
   toggleMachinePower (callback, id) {
     let vm = fakeMachines.find(vm => vm.id === id)
