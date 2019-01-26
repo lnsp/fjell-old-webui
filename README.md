@@ -1,6 +1,6 @@
-# fjell
+# ![fjell](https://raw.githubusercontent.com/lnsp/fjell/master/docs/logo.png)
 
-> Open platform for managing computing, storage and networking resources.
+fjell is an open platform for managing computing, storage and networking resources. The project strives to provide an easy-to-use, extendable interface for self-service infrastructure.
 
 ## Build Setup
 
